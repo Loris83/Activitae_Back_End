@@ -2,9 +2,12 @@ package com.activitae.activitae.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,6 +43,12 @@ public class Activite {
 	
 	@Column(nullable = true)
     private String site;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+    List<ActivityPlaceType> place_types;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+    List<ActivityType> types;
 	
 	@JoinColumn(name = "user_id")
 	@ManyToOne
@@ -117,6 +126,13 @@ public class Activite {
 		this.user = user;
 	}
 	
+	public List<ActivityPlaceType> getPlaceType(){
+		return place_types;
+	}
+	
+	public List<ActivityType> getType(){
+		return types;
+	}
 	
 	
 	

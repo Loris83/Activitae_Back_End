@@ -130,16 +130,16 @@ public class Activite {
 		return place_types;
 	}
 	
-	public void setPlaceType(ActivityPlaceType place_type) {
-		place_types.add(place_type);
+	public void setPlaceType(List<ActivityPlaceType> place_types) {
+		this.place_types = place_types;
 	}
 	
 	public List<ActivityType> getType(){
 		return types;
 	}
 	
-	public void setType(ActivityType type) {
-		types.add(type);
+	public void setType(List<ActivityType> types) {
+		this.types = types;
 	}
 	
 	

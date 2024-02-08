@@ -11,7 +11,6 @@ import com.activitae.activitae.entities.User;
 
 @Repository
 public interface ActiviteRepository extends JpaRepository<Activite, Long> {
-	Optional<Activite> findById();
-	List<Activite> findByUser();
+	List<Activite> findByUser(User user);
 	List<Activite> findAll();
 }

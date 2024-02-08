@@ -1,57 +1,32 @@
-package com.activitae.activitae.entities;
+package com.activitae.activitae.requests;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.activitae.activitae.entities.User;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Activites")
-public class Activite {
+public class CreateActiviteRequest {
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
-	@Column(nullable = false)
     private String titre;
 	
-	@Column(nullable = false)
     private Date date;
 	
-	@Column(nullable = false)
     private String address; //chez Jerem
 	
-	@Column(nullable = true)
     private BigDecimal price;
 	
-	@Column(nullable = false)
     private String descriptif;
 	
-	@Column(nullable = true)
     private String info_comp;
 	
-	@Column(nullable = true)
     private String site;
-	
-	@JoinColumn(name = "user_id")
-	@ManyToOne
-	private User user;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getTitre() {
 		return titre;
@@ -108,16 +83,4 @@ public class Activite {
 	public void setSite(String site) {
 		this.site = site;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	
-	
-	
 }

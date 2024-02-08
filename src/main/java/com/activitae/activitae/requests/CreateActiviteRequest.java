@@ -2,7 +2,10 @@ package com.activitae.activitae.requests;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.activitae.activitae.entities.ActivityPlaceType;
+import com.activitae.activitae.entities.ActivityType;
 import com.activitae.activitae.entities.User;
 
 import jakarta.persistence.Column;
@@ -27,6 +30,10 @@ public class CreateActiviteRequest {
     private String info_comp;
 	
     private String site;
+    
+    private List<ActivityPlaceType> place_types;
+    
+    private List<ActivityType> types;
 
 	public String getTitre() {
 		return titre;
@@ -82,5 +89,21 @@ public class CreateActiviteRequest {
 
 	public void setSite(String site) {
 		this.site = site;
+	}
+	
+	public List<ActivityPlaceType> getPlaceType(){
+		return place_types;
+	}
+	
+	public void setPlaceType(List<ActivityPlaceType> place_types) {
+		this.place_types = place_types;
+	}
+	
+	public List<ActivityType> getType(){
+		return types;
+	}
+	
+	public void setType(List<ActivityType> types) {
+		this.types = types;
 	}
 }

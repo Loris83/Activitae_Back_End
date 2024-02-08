@@ -54,6 +54,6 @@ public class UserController {
 
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationRequest request) {
-        return userService.registerUser(request.getEmail(), request.getPassword());
+        return userService.registerUser(request);
     }
 }

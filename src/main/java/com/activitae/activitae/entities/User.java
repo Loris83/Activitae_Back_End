@@ -1,5 +1,6 @@
 package com.activitae.activitae.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,8 +31,22 @@ public class User {
     @Column(nullable = false)
     private String pseudo;
     
+    @Column(nullable = true)
+    private Date birthdate;
+    
+    @Column(nullable = true)
+    private String siret;
+    
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+    
+    public void setDate(Date date) {
+    	this.birthdate = date;
+    }
+    
+    public void setSiret(String siret) {
+    	this.siret = siret;
+    }
 
     public void setId(Long id) {
 		this.id = id;
@@ -63,6 +78,14 @@ public class User {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public Date getBirthdate() {
+		return birthdate;
+	}
+	
+	public String getSiret() {
+		return siret;
 	}
 	
 	public List<Role> getRoles(){

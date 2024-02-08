@@ -39,7 +39,10 @@ public class ActiviteService {
 		activite.setPrice(request.getPrice());
 		activite.setSite(request.getSite());
 		activite.setTitre(request.getTitre());
+		activite.setType(request.getType());
+		activite.setPlaceType(request.getPlaceType());
 		activite.setUser(user);
+		
 		return activiteRepository.save(activite);
 	}
 	

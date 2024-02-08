@@ -1,5 +1,7 @@
 package com.activitae.activitae.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,5 +41,9 @@ public class ActiviteService {
 		activite.setTitre(request.getTitre());
 		activite.setUser(user);
 		return activiteRepository.save(activite);
+	}
+	
+	public List<Activite> getActivities(){
+		return activiteRepository.findAll();
 	}
 }

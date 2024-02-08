@@ -66,6 +66,7 @@ public class SecurityConfig {
         	auth
         	.requestMatchers("/api/users/register").permitAll()
         	.requestMatchers("/api/users/login").permitAll()
+        	.requestMatchers("/api/pictures/view/**").permitAll()
         		.anyRequest().authenticated()
         		).logout(t -> t.logoutUrl("/api/users/logout"));
         

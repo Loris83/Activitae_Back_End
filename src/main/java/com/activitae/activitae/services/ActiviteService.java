@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.User;
+import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.repositories.ActiviteRepository;
 import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.CreateActiviteRequest;
@@ -26,7 +27,8 @@ public class ActiviteService {
 	
 	public Activite createActivite(CreateActiviteRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findByEmail(jwtUtils.getUserNameFromJwtToken(auth.getName())).get();
+		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
+		User user = userRepository.findById(userPrincipal.getId()).get();
 		Activite activite = new Activite();
 		activite.setAddress(request.getAddress());
 		activite.setDate(request.getDate());

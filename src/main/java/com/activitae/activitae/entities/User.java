@@ -35,6 +35,9 @@ public class User {
     private Date birthdate;
     
     @Column(nullable = true)
+    private String image_url;
+    
+    @Column(nullable = true)
     private String siret;
     
     @ElementCollection(fetch = FetchType.EAGER)
@@ -94,6 +97,14 @@ public class User {
 	
 	public void setRoles( List<Role> roles){
 		this.roles = roles;
+	}
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 	
 }

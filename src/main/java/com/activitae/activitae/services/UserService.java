@@ -29,10 +29,10 @@ public class UserService {
 
         User user = new User();
         user.setEmail(request.getEmail());
+        user.setPseudo(request.getUsername());
         user.setPassword(hashedPassword);
         user.setDate(request.getBirthdate());
         user.setSiret(request.getSiret());
-        user.setPseudo("anonyme");
         List<Role> roles = new ArrayList<Role>();
         roles.add(Role.ROLE_PARTICIPANT);
         user.setRoles(roles);

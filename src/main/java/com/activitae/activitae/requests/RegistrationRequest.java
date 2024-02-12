@@ -10,6 +10,7 @@ public class RegistrationRequest {
     private String password;
     private Date birthdate;
     private String siret;
+    private String username;
     
     
 	public String getEmail() {
@@ -40,5 +41,11 @@ public class RegistrationRequest {
 	}
 	public void setSiret(String siret) {
 		this.siret = siret;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

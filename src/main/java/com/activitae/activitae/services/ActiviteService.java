@@ -1,6 +1,7 @@
 package com.activitae.activitae.services;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +13,8 @@ import com.activitae.activitae.entities.User;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.repositories.ActiviteRepository;
 import com.activitae.activitae.repositories.UserRepository;
-import com.activitae.activitae.requests.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.utils.JwtUtils;
 
 @Service
@@ -46,7 +48,11 @@ public class ActiviteService {
 		return activiteRepository.save(activite);
 	}
 	
-	public List<Activite> getActivities(){
-		return activiteRepository.findAll();
+	public List<GetActivityResponse> getActivities(){
+		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
+		for(Activite a : activiteRepository.findAll()) {
+			activities.add(new GetActivityResponse(a));
+		}
+		return activities;
 	}
 }

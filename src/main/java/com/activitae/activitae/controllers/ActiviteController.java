@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activitae.activitae.entities.Activite;
-import com.activitae.activitae.requests.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.services.ActiviteService;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
@@ -36,7 +37,7 @@ public class ActiviteController {
    }
    
    @GetMapping("/get")
-   public List<Activite> getActivities(){
+   public List<GetActivityResponse> getActivities(){
 	   return activiteService.getActivities();
    }
    

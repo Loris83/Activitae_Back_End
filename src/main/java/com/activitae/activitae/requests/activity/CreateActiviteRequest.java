@@ -1,4 +1,4 @@
-package com.activitae.activitae.requests;
+package com.activitae.activitae.requests.activity;
 
 import java.math.BigDecimal;
 import java.util.Date;

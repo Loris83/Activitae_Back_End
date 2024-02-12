@@ -31,9 +31,9 @@ public class CreateActiviteRequest {
 	
     private String site;
     
-    private List<ActivityPlaceType> place_types;
+    private ActivityPlaceType place_type;
     
-    private List<ActivityType> types;
+    private ActivityType type;
 
 	public String getTitre() {
 		return titre;
@@ -91,19 +91,19 @@ public class CreateActiviteRequest {
 		this.site = site;
 	}
 	
-	public List<ActivityPlaceType> getPlaceType(){
-		return place_types;
+	public ActivityPlaceType getPlaceType(){
+		return place_type;
 	}
 	
-	public void setPlaceType(List<ActivityPlaceType> place_types) {
-		this.place_types = place_types;
+	public void setPlaceType(ActivityPlaceType place_type) {
+		this.place_type = place_type;
 	}
 	
-	public List<ActivityType> getType(){
-		return types;
+	public ActivityType getType(){
+		return type;
 	}
 	
-	public void setType(List<ActivityType> types) {
-		this.types = types;
+	public void setType(ActivityType type) {
+		this.type = type;
 	}
 }

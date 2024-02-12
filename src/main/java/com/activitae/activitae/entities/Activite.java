@@ -7,6 +7,8 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,11 +46,13 @@ public class Activite {
 	@Column(nullable = true)
     private String site;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
-    List<ActivityPlaceType> place_types;
+	@Column(nullable = true)
+	@Enumerated(EnumType.ORDINAL)
+    ActivityPlaceType place_type;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
-    List<ActivityType> types;
+	@Column(nullable = true)
+	@Enumerated(EnumType.ORDINAL)
+    ActivityType type;
 	
 	@JoinColumn(name = "user_id")
 	@ManyToOne
@@ -126,20 +130,20 @@ public class Activite {
 		this.user = user;
 	}
 	
-	public List<ActivityPlaceType> getPlaceType(){
-		return place_types;
+	public ActivityPlaceType getPlaceType(){
+		return place_type;
 	}
 	
-	public void setPlaceType(List<ActivityPlaceType> place_types) {
-		this.place_types = place_types;
+	public void setPlaceType(ActivityPlaceType place_type) {
+		this.place_type = place_type;
 	}
 	
-	public List<ActivityType> getType(){
-		return types;
+	public ActivityType getType(){
+		return type;
 	}
 	
-	public void setType(List<ActivityType> types) {
-		this.types = types;
+	public void setType(ActivityType type) {
+		this.type = type;
 	}
 	
 	

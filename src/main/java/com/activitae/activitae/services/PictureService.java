@@ -4,20 +4,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.File;
 
+import com.activitae.activitae.entities.Avatar;
 import com.activitae.activitae.entities.Picture;
+import com.activitae.activitae.repositories.AvatarRepository;
 import com.activitae.activitae.repositories.PictureRepository;
 import com.activitae.activitae.requests.UploadPictureRequest;
+import com.activitae.activitae.requests.picture.SetAvatarRequest;
 
 @Service
 public class PictureService {
 	
 	@Autowired
 	private PictureRepository pictureRepository;
+	
+	@Autowired
+	private AvatarRepository avatarRepository;
 	
 	public Picture uploadPicture(UploadPictureRequest request) {
 		Picture picture = new Picture();
@@ -55,6 +63,27 @@ public class PictureService {
 		return picture.getData();
 		
 		
+	}
+	
+	public Avatar setAvatar(SetAvatarRequest request) {
+		Picture picture = getPictureById(request.getPicture_id());
+		Optional<Avatar> a1 = avatarRepository.findByPicture_id(picture.getId());
+		if(request.getIsAvatar()) {
+			if(a1.isEmpty()) {
+				Avatar avatar = new Avatar();
+				avatar.setPicture(picture);
+				return avatarRepository.save(avatar);
+			}
+		} else {
+			if(a1.isPresent()) {
+				avatarRepository.delete(a1.get());
+			}
+		}
+		return null;
+	}
+	
+	public List<Avatar> getAvatars(){
+		return avatarRepository.findAll();
 	}
 	
 }

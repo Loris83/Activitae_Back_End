@@ -1,6 +1,6 @@
 package com.activitae.activitae.requests.picture;
 
-public class SetAvatar {
+public class SetAvatarRequest {
 	private Long picture_id;
 	private Boolean isAvatar;
 	public Long getPicture_id() {

@@ -29,7 +29,7 @@ public class User {
     private String password;
     
     @Column(nullable = false)
-    private String pseudo;
+    private String username;
     
     @Column(nullable = true)
     private Date birthdate;
@@ -63,8 +63,8 @@ public class User {
 		this.password = password;
 	}
 	
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
+	public void setUsername(String pseudo) {
+		this.username = pseudo;
 	}
 	
 	public Long getId() {
@@ -75,8 +75,8 @@ public class User {
 		return email;
 	}
 	
-	public String getPseudo() {
-		return pseudo;
+	public String getUsername() {
+		return username;
 	}
 	
 	public String getPassword() {

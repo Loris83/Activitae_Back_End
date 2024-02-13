@@ -50,7 +50,7 @@ public class GetUserResponse {
 	
 	public GetUserResponse(User user) {
 		setId(user.getId());
-		setUsername(user.getPseudo());
+		setUsername(user.getUsername());
 		setSiret(user.getSiret());
 		setImage_url(user.getImage_url());
 	}

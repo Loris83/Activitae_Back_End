@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import com.activitae.activitae.requests.RegistrationRequest;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -55,5 +58,10 @@ public class UserController {
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationRequest request) {
         return userService.registerUser(request);
+    }
+    
+    @GetMapping("/get-self")
+    public User getSelf() {
+        return userService.getSelf();
     }
 }

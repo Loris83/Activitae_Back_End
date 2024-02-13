@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.Role;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.repositories.UserRepository;
@@ -29,7 +32,7 @@ public class UserService {
 
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setPseudo(request.getUsername());
+        user.setUsername(request.getUsername());
         user.setPassword(hashedPassword);
         user.setDate(request.getBirthdate());
         user.setSiret(request.getSiret());
@@ -38,5 +41,12 @@ public class UserService {
         user.setRoles(roles);
 
         return userRepository.save(user);
+    }
+    
+    public User getSelf() {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
+		User user = userRepository.findById(userPrincipal.getId()).get();
+		return user;
     }
 }

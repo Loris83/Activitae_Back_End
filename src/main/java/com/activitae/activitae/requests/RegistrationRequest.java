@@ -2,6 +2,8 @@ package com.activitae.activitae.requests;
 
 import java.util.Date;
 
+import com.activitae.activitae.entities.Role;
+
 import jakarta.persistence.Column;
 
 public class RegistrationRequest {
@@ -11,6 +13,7 @@ public class RegistrationRequest {
     private Date birthdate;
     private String siret;
     private String username;
+    private Role role;
     
     
 	public String getEmail() {
@@ -47,5 +50,11 @@ public class RegistrationRequest {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

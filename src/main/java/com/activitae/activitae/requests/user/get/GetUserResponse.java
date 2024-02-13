@@ -3,6 +3,7 @@ package com.activitae.activitae.requests.user.get;
 import java.util.Date;
 import java.util.List;
 
+import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.Role;
 import com.activitae.activitae.entities.User;
 
@@ -15,6 +16,8 @@ public class GetUserResponse {
     private String siret;
     
     private String image_url;
+    
+    List<Activite> favorites;
 
 	public Long getId() {
 		return id;
@@ -48,11 +51,20 @@ public class GetUserResponse {
 		this.image_url = image_url;
 	}
 	
+	public List<Activite> getFavorites(){
+		return favorites;
+	}
+	
+	public void setFavorites(List<Activite> favorites){
+		this.favorites = favorites;
+	}
+	
 	public GetUserResponse(User user) {
 		setId(user.getId());
 		setUsername(user.getUsername());
 		setSiret(user.getSiret());
 		setImage_url(user.getImage_url());
+		setFavorites(user.getFavorites());
 	}
 	
 	public GetUserResponse() {

@@ -12,6 +12,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,6 +44,9 @@ public class User {
     
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<Activite> favorites;
     
     public void setDate(Date date) {
     	this.birthdate = date;
@@ -105,6 +110,14 @@ public class User {
 
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+	
+	public List<Activite> getFavorites(){
+		return favorites;
+	}
+	
+	public void setFavorites(List<Activite> favorites){
+		this.favorites = favorites;
 	}
 	
 }

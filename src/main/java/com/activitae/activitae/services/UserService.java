@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.Role;
 import com.activitae.activitae.entities.User;
@@ -48,5 +49,14 @@ public class UserService {
 		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
 		return user;
+    }
+    
+    public User putFavorite(Activite activity) {
+    	User user = getSelf();
+    	List<Activite> favorites = new ArrayList<Activite>();
+    	favorites = user.getFavorites();
+    	favorites.add(activity);
+    	user.setFavorites(favorites);
+    	return userRepository.save(user);
     }
 }

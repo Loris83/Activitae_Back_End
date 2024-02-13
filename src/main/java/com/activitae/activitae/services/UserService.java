@@ -38,7 +38,10 @@ public class UserService {
         user.setDate(request.getBirthdate());
         user.setSiret(request.getSiret());
         List<Role> roles = new ArrayList<Role>();
-        roles.add(Role.ROLE_PARTICIPANT);
+        if(request.getRole() == Role.ROLE_PARTICIPANT || request.getRole() == Role.ROLE_ORGANISATEUR)
+        	roles.add(request.getRole());
+        else
+        	roles.add(Role.ROLE_PARTICIPANT);
         user.setRoles(roles);
 
         return userRepository.save(user);

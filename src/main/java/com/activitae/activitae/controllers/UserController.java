@@ -20,6 +20,7 @@ import com.activitae.activitae.entities.User;
 import com.activitae.activitae.requests.JwtAuthenticationResponse;
 import com.activitae.activitae.requests.LoginRequest;
 import com.activitae.activitae.requests.RegistrationRequest;
+import com.activitae.activitae.services.ActiviteService;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
 
@@ -36,6 +37,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ActiviteService activiteService;
     
 
 
@@ -63,5 +67,10 @@ public class UserController {
     @GetMapping("/get-self")
     public User getSelf() {
         return userService.getSelf();
+    }
+    
+    @PostMapping("/add-favorite")
+    public User addFavorite() {
+    	return userService.putFavorite(activiteService.getActivity(2L));
     }
 }

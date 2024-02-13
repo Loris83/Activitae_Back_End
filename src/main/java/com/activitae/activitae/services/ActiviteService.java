@@ -1,6 +1,7 @@
 package com.activitae.activitae.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,10 @@ public class ActiviteService {
 			activities.add(new GetActivityResponse(a));
 		}
 		return activities;
+	}
+	
+	public Activite getActivity(Long id) {
+		Optional<Activite> activity = activiteRepository.findById(id);
+		return activity.orElseThrow();
 	}
 }

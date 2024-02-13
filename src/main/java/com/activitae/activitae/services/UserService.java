@@ -56,8 +56,9 @@ public class UserService {
     
     public User putFavorite(Activite activity) {
     	User user = getSelf();
-    	List<Activite> favorites = new ArrayList<Activite>();
-    	favorites = user.getFavorites();
+    	List<Activite> favorites = user.getFavorites();
+    	if(favorites == null) 
+    		favorites = new ArrayList<Activite>();
     	favorites.add(activity);
     	user.setFavorites(favorites);
     	return userRepository.save(user);

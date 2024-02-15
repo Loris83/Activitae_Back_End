@@ -1,6 +1,7 @@
 package com.activitae.activitae.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,16 @@ public class ActiviteService {
 
 	@Autowired
 	private ActiviteRepository activiteRepository;
-	
+
 	@Autowired
-    private UserRepository userRepository;
-	
+	private UserRepository userRepository;
+
 	@Autowired
 	private JwtUtils jwtUtils;
-	
+
 	public Activite createActivite(CreateActiviteRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
 		Activite activite = new Activite();
 		activite.setAddress(request.getAddress());
@@ -52,93 +53,91 @@ public class ActiviteService {
 		activite.setType(request.getType());
 		activite.setPlaceType(request.getPlaceType());
 		activite.setUser(user);
-		
+
 		return activiteRepository.save(activite);
 	}
-	
 
-	
 	public void deleteActivite(Long idActivite) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
-		
-		
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+
 		Activite activite = activiteRepository.findById(idActivite)
 				.orElseThrow(() -> new EntityNotFoundException("Activité non trouvée"));
-		
+
 		if (!activite.getUser().getId().equals(userPrincipal.getId())) {
-	            throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
-	        }
-		
-		activiteRepository.delete(activite);	
+			throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
+		}
+
+		activiteRepository.delete(activite);
 	}
-	
-	
-	public List<GetActivityResponse> getActivities(){
+
+	public List<GetActivityResponse> getActivities() {
 		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
-		for(Activite a : activiteRepository.findAll()) {
+		for (Activite a : activiteRepository.findAll()) {
 			activities.add(new GetActivityResponse(a));
 		}
 		return activities;
 	}
-	
 
-	
-	public Activite setActivite (PatchActiviteRequest patchActiviteRequest) {
-		
-		
-		
+	public Activite setActivite(PatchActiviteRequest patchActiviteRequest) {
+
 		Activite activite = activiteRepository.findById(patchActiviteRequest.getId()).get();
-		
-   		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
-		
-		if(userPrincipal.getId()!=activite.getUser().getId()) {
-			 throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+
+		if (userPrincipal.getId() != activite.getUser().getId()) {
+			throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.titre)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.titre)) {
 			activite.setTitre(patchActiviteRequest.getTitre());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.date)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.date)) {
 			activite.setDate(patchActiviteRequest.getDate());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.address)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.address)) {
 			activite.setAddress(patchActiviteRequest.getAddress());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.price)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.price)) {
 			activite.setPrice(patchActiviteRequest.getPrice());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.descriptif)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.descriptif)) {
 			activite.setDescriptif(patchActiviteRequest.getDescriptif());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.info_comp)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.info_comp)) {
 			activite.setInfo_comp(patchActiviteRequest.getInfo_comp());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.site)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.site)) {
 			activite.setSite(patchActiviteRequest.getSite());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.place_type)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.place_type)) {
 			activite.setPlaceType(patchActiviteRequest.getPlace_type());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.type)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.type)) {
 			activite.setType(patchActiviteRequest.getType());
 		}
-		
-		if(patchActiviteRequest.getFields().contains(ActiviteFields.user)) {
+
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.user)) {
 			activite.setUser(patchActiviteRequest.getUser());
 		}
-		
+
 		return activiteRepository.save(activite);
-		
+
+	}
+
+	public Activite getActivity(Long id) {
+		Optional<Activite> activity = activiteRepository.findById(id);
+		return activity.orElseThrow();
+
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.Role;
 import com.activitae.activitae.entities.User;
@@ -44,6 +45,8 @@ public class UserService {
         else
         	roles.add(Role.ROLE_PARTICIPANT);
         user.setRoles(roles);
+        List<Activite> favorites = new ArrayList<Activite>();
+        user.setFavorites(favorites);
 
         return userRepository.save(user);
     }
@@ -52,9 +55,20 @@ public class UserService {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
+		System.out.println(user.getFavorites());
 		return user;
     }
-    
+	
+    public User putFavorite(Activite activity) {
+    	User user = getSelf();
+    	List<Activite> favorites = user.getFavorites();
+    	if(favorites == null) 
+    		favorites = new ArrayList<Activite>();
+    	favorites.add(activity);
+    	user.setFavorites(favorites);
+    	return userRepository.save(user);
+    }
+		
     public User setUser(PatchUserRequest patchUserRequest) {
     	User user = userRepository.findById(patchUserRequest.getId()).get();
     	if(patchUserRequest.getFields().contains(UserFields.email)){

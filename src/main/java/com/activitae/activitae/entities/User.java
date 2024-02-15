@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -12,6 +14,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,6 +47,11 @@ public class User {
     
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name="favorites",joinColumns=@JoinColumn(name="user_id"))
+    @JsonManagedReference
+    List<Activite> favorites;
     
     public void setDate(Date date) {
     	this.birthdate = date;
@@ -105,6 +115,14 @@ public class User {
 
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+	
+	public List<Activite> getFavorites(){
+		return favorites;
+	}
+	
+	public void setFavorites(List<Activite> favorites){
+		this.favorites = favorites;
 	}
 	
 }

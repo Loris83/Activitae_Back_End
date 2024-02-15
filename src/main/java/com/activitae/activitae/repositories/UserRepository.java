@@ -10,5 +10,6 @@ import com.activitae.activitae.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByEmail(String email);
+	Optional<User> findById (Long id);
 	Boolean existsByEmail(String email);
 }

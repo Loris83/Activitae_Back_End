@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,8 @@ import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.RegistrationRequest;
 import com.activitae.activitae.requests.user.PatchUserRequest;
 import com.activitae.activitae.requests.user.UserFields;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -91,5 +94,18 @@ public class UserService {
     		user.setSiret(patchUserRequest.getSiret());
     	}
     	return userRepository.save(user);
+    }
+    
+
+    public void deleteUser (Long idUser) {
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
+    	  	
+    	
+    	User user = userRepository.findById(idUser).
+    			orElseThrow(() -> new EntityNotFoundException("User non trouvé"));
+    	
+    	userRepository.delete(user);
     }
 }

@@ -17,7 +17,7 @@ public class GetUserResponse {
     
     private String image_url;
     
-    List<Activite> favorites;
+    private List<Activite> favorites;
 
 	public Long getId() {
 		return id;

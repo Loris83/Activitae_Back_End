@@ -71,6 +71,6 @@ public class UserController {
     
     @PostMapping("/add-favorite")
     public User addFavorite() {
-    	return userService.putFavorite(activiteService.getActivity(2L));
+    	return userService.putFavorite(activiteService.getActivity(1L));
     }
 }

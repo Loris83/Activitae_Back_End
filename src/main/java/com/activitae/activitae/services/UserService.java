@@ -43,6 +43,8 @@ public class UserService {
         else
         	roles.add(Role.ROLE_PARTICIPANT);
         user.setRoles(roles);
+        List<Activite> favorites = new ArrayList<Activite>();
+        user.setFavorites(favorites);
 
         return userRepository.save(user);
     }
@@ -51,6 +53,7 @@ public class UserService {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
+		System.out.println(user.getFavorites());
 		return user;
     }
     

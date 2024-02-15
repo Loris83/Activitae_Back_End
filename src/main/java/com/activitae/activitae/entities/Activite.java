@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -56,6 +58,7 @@ public class Activite {
 	
 	@JoinColumn(name = "user_id")
 	@ManyToOne
+	@JsonBackReference
 	private User user;
 	
 	public Long getId() {

@@ -11,16 +11,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.requests.JwtAuthenticationResponse;
 import com.activitae.activitae.requests.LoginRequest;
 import com.activitae.activitae.requests.RegistrationRequest;
 import com.activitae.activitae.services.ActiviteService;
+import com.activitae.activitae.requests.user.PatchUserRequest;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
 
@@ -68,9 +71,17 @@ public class UserController {
     public User getSelf() {
         return userService.getSelf();
     }
-    
+
     @PostMapping("/add-favorite")
     public User addFavorite() {
     	return userService.putFavorite(activiteService.getActivity(1L));
+    }
+
+    @PatchMapping("/set-self")
+    public User setSelf(@RequestBody PatchUserRequest patchUserRequest) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
+		patchUserRequest.setId(userPrincipal.getId());
+    	return userService.setUser(patchUserRequest);
     }
 }

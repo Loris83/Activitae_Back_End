@@ -24,6 +24,7 @@ import com.activitae.activitae.entities.User;
 import com.activitae.activitae.requests.JwtAuthenticationResponse;
 import com.activitae.activitae.requests.LoginRequest;
 import com.activitae.activitae.requests.RegistrationRequest;
+import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.services.ActiviteService;
 import com.activitae.activitae.requests.user.PatchUserRequest;
 import com.activitae.activitae.services.UserService;
@@ -74,9 +75,9 @@ public class UserController {
         return userService.getSelf();
     }
 
-    @PostMapping("/add-favorite")
-    public User addFavorite() {
-    	return userService.putFavorite(activiteService.getActivity(1L));
+    @PostMapping("/add-favorite/{id}")
+    public User addFavorite(@PathVariable Long id) {
+    	return userService.putFavorite(activiteService.getActivity(id));
     }
 
     @PatchMapping("/set-self")

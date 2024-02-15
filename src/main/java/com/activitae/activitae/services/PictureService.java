@@ -65,6 +65,8 @@ public class PictureService {
 		
 	}
 	
+	
+	
 	public Avatar setAvatar(SetAvatarRequest request) {
 		Picture picture = getPictureById(request.getPicture_id());
 		Optional<Avatar> a1 = avatarRepository.findByPicture_id(picture.getId());

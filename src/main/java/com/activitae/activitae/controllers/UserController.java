@@ -79,6 +79,11 @@ public class UserController {
     public User addFavorite(@PathVariable Long id) {
     	return userService.putFavorite(activiteService.getActivity(id));
     }
+    
+    @PostMapping("/delete-favorite/{id}")
+    public User deleteFavorite(@PathVariable Long id) {
+    	return userService.deleteFavorite(activiteService.getActivity(id));
+    }
 
     @PatchMapping("/set-self")
     public User setSelf(@RequestBody PatchUserRequest patchUserRequest) {

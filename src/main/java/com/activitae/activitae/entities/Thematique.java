@@ -21,7 +21,7 @@ public class Thematique {
 	
 	
 	@Column(nullable = false)
-	private String  image_url;
+	private String  imageUrl;
 
 
 	public Long getId() {
@@ -44,14 +44,17 @@ public class Thematique {
 	}
 
 
-	public String getImage_url() {
-		return image_url;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
-	} 
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+
+
 	
 	
 	

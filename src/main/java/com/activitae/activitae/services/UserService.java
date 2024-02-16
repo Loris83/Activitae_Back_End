@@ -71,6 +71,16 @@ public class UserService {
     	user.setFavorites(favorites);
     	return userRepository.save(user);
     }
+    
+    public User deleteFavorite(Activite activity) {
+    	User user = getSelf();
+    	List<Activite> favorites = user.getFavorites();
+    	if(favorites == null) 
+    		return userRepository.save(user);
+    	favorites.remove(activity);
+    	user.setFavorites(favorites);
+    	return userRepository.save(user);
+    }
 		
     public User setUser(PatchUserRequest patchUserRequest) {
     	User user = userRepository.findById(patchUserRequest.getId()).get();

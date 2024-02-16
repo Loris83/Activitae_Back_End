@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -48,8 +49,8 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
     
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name="favorites",joinColumns=@JoinColumn(name="user_id"))
+    @ManyToMany 
+    @JoinTable(name="favorites",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name = "activity_id"))
     @JsonManagedReference
     List<Activite> favorites;
     

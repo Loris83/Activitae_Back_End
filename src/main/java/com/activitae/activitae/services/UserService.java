@@ -50,7 +50,8 @@ public class UserService {
         user.setRoles(roles);
         List<Activite> favorites = new ArrayList<Activite>();
         user.setFavorites(favorites);
-
+        List<Activite> seen_activities = new ArrayList<Activite>();
+        user.setSeenActivies(seen_activities);
         return userRepository.save(user);
     }
     
@@ -58,7 +59,6 @@ public class UserService {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userPrincipal = (CustomUserDetails)auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
-		System.out.println(user.getFavorites());
 		return user;
     }
 	
@@ -79,6 +79,25 @@ public class UserService {
     		return userRepository.save(user);
     	favorites.remove(activity);
     	user.setFavorites(favorites);
+    	return userRepository.save(user);
+    }
+    
+    public User addSeenActivity(Activite activity) {
+    	User user = getSelf();
+    	List<Activite> seen_activities = user.getSeenActivities();
+    	if(seen_activities.size() == 10) {
+    		seen_activities.remove(0);
+    		seen_activities.add(activity);
+    		return userRepository.save(user);
+    	}
+    	if(seen_activities.size() != 0) {
+    		for(int i=0;i<seen_activities.size();i++) {
+    		if(seen_activities.get(i).getId() == activity.getId())
+    			return userRepository.save(user);
+    		}
+    	}
+    	seen_activities.add(activity);
+    	user.setSeenActivies(seen_activities);
     	return userRepository.save(user);
     }
 		

@@ -54,6 +54,11 @@ public class User {
     @JsonManagedReference
     List<Activite> favorites;
     
+    @ManyToMany
+    @JoinTable(name="seen_activities",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns = @JoinColumn(name = "activity_id"))
+    //@JsonManagedReference
+    List<Activite> seen_activities;
+    
     public void setDate(Date date) {
     	this.birthdate = date;
     }
@@ -124,6 +129,14 @@ public class User {
 	
 	public void setFavorites(List<Activite> favorites){
 		this.favorites = favorites;
+	}
+	
+	public List<Activite> getSeenActivities(){
+		return seen_activities;
+	}
+	
+	public void setSeenActivies(List<Activite> seen_activities){
+		this.seen_activities = seen_activities;
 	}
 	
 }

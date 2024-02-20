@@ -80,6 +80,11 @@ public class UserController {
     	return userService.putFavorite(activiteService.getActivity(id));
     }
     
+    @PostMapping("/add-history/{id}")
+    public User addHistory(@PathVariable Long id) {
+    	return userService.addSeenActivity(activiteService.getActivity(id));
+    }
+    
     @PostMapping("/delete-favorite/{id}")
     public User deleteFavorite(@PathVariable Long id) {
     	return userService.deleteFavorite(activiteService.getActivity(id));

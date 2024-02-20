@@ -54,7 +54,10 @@ public class User {
     @JsonManagedReference
     List<Activite> favorites;
     
-    public void setDate(Date date) {
+
+
+
+	public void setDate(Date date) {
     	this.birthdate = date;
     }
     

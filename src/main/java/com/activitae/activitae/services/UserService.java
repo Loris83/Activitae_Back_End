@@ -35,7 +35,6 @@ public class UserService {
 			throw new RuntimeException("Email déjà utilisé.");
 
 		String hashedPassword = passwordEncoder.encode(request.getPassword());
-
 		User user = new User();
 		user.setEmail(request.getEmail());
 		user.setUsername(request.getUsername());
@@ -50,7 +49,8 @@ public class UserService {
 		user.setRoles(roles);
 		List<Activite> favorites = new ArrayList<Activite>();
 		user.setFavorites(favorites);
-
+		List<Activite> seen_activities = new ArrayList<Activite>();
+		user.setSeenActivies(seen_activities);
 		return userRepository.save(user);
 	}
 
@@ -58,7 +58,6 @@ public class UserService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
-		System.out.println(user.getFavorites());
 		return user;
 	}
 
@@ -72,12 +71,6 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public List<Activite> getFavorite() {
-		User user = getSelf();
-		return user.getFavorites();
-
-	}
-
 	public User deleteFavorite(Activite activity) {
 		User user = getSelf();
 		List<Activite> favorites = user.getFavorites();
@@ -85,6 +78,25 @@ public class UserService {
 			return userRepository.save(user);
 		favorites.remove(activity);
 		user.setFavorites(favorites);
+		return userRepository.save(user);
+	}
+
+	public User addSeenActivity(Activite activity) {
+		User user = getSelf();
+		List<Activite> seen_activities = user.getSeenActivities();
+		if (seen_activities.size() == 10) {
+			seen_activities.remove(0);
+			seen_activities.add(activity);
+			return userRepository.save(user);
+		}
+		if (seen_activities.size() != 0) {
+			for (int i = 0; i < seen_activities.size(); i++) {
+				if (seen_activities.get(i).getId() == activity.getId())
+					return userRepository.save(user);
+			}
+		}
+		seen_activities.add(activity);
+		user.setSeenActivies(seen_activities);
 		return userRepository.save(user);
 	}
 
@@ -110,6 +122,12 @@ public class UserService {
 			user.setSiret(patchUserRequest.getSiret());
 		}
 		return userRepository.save(user);
+	}
+
+	public List<Activite> getFavorite() {
+		User user = getSelf();
+		return user.getFavorites();
+
 	}
 
 	public void deleteUser(Long idUser) {

@@ -63,7 +63,7 @@ public class UserController {
 
         String jwt = jwtUtils.generateJwtToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
-    }
+    } 
 
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationRequest request) {

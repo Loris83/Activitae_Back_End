@@ -65,6 +65,8 @@ public class ActiviteController {
    	return activiteService.setActivite(patchActiviteRequest);
    }
    
-   
-
+   @GetMapping("/get-times/{id}")
+   public int getActivityTime(@PathVariable Long id) {
+	   return activiteService.getActiviteByDate(activiteService.getActivity(id));
+   }
 }

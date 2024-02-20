@@ -52,6 +52,7 @@ public class ActiviteService {
 		activite.setTitre(request.getTitre());
 		activite.setType(request.getType());
 		activite.setPlaceType(request.getPlaceType());
+		activite.setActivityThematics(request.getActivityThematics());
 		activite.setUser(user);
 
 		return activiteRepository.save(activite);

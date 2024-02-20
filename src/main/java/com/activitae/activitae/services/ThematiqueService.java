@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.Thematique;
 import com.activitae.activitae.repositories.ThematiqueRepository;
+import com.activitae.activitae.requests.CreateThematicRequest;
 
 @Service
 public class ThematiqueService {
@@ -26,6 +27,12 @@ public class ThematiqueService {
 		return thematique.orElseThrow();
 	}
 	
+	public Thematique addThematique(CreateThematicRequest request) {
+		Thematique thematic = new Thematique();
+		thematic.setName(request.getName());
+		thematic.setImageUrl(request.getImageUrl());
+		return thematiqueRepository.save(thematic);
+	}
 
 	
 }

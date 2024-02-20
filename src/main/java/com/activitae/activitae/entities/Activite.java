@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -16,6 +18,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -60,6 +64,11 @@ public class Activite {
 	@ManyToOne
 	@JsonBackReference
 	private User user;
+	
+	@ManyToMany 
+    @JoinTable(name="activity_thematics",joinColumns=@JoinColumn(name="activity_id"), inverseJoinColumns = @JoinColumn(name = "thematic_id"))
+    //@JsonManagedReference
+    List<Thematique> activity_thematics;
 	
 	public Long getId() {
 		return id;
@@ -149,6 +158,13 @@ public class Activite {
 		this.type = type;
 	}
 	
+	public List<Thematique> getActivityThematics(){
+		return activity_thematics;
+	}
+	
+	public void setActivityThematics(List<Thematique> activity_thematics){
+		this.activity_thematics = activity_thematics;
+	}
 	
 	
 }

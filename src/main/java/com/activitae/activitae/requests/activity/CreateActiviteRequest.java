@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
+import com.activitae.activitae.entities.Thematique;
 import com.activitae.activitae.entities.User;
 
 import jakarta.persistence.Column;
@@ -34,6 +35,8 @@ public class CreateActiviteRequest {
     private ActivityPlaceType place_type;
     
     private ActivityType type;
+    
+    List<Thematique> activity_thematics;
 
 	public String getTitre() {
 		return titre;
@@ -105,5 +108,13 @@ public class CreateActiviteRequest {
 	
 	public void setType(ActivityType type) {
 		this.type = type;
+	}
+	
+	public List<Thematique> getActivityThematics(){
+		return activity_thematics;
+	}
+	
+	public void setActivityThematics(List<Thematique> activity_thematics){
+		this.activity_thematics = activity_thematics;
 	}
 }

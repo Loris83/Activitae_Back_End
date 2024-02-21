@@ -24,6 +24,11 @@ import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.utils.JwtUtils;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -140,5 +145,13 @@ public class ActiviteService {
 		Optional<Activite> activity = activiteRepository.findById(id);
 		return activity.orElseThrow();
 
+	}
+	
+	public int getActiviteByDate(Activite activity) {
+		Instant instant = activity.getDate().toInstant();
+		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+			if(LocalDateTime.now().isAfter(dateTime))
+				return 0; //Retourne 0 si l'activité est dans le passé
+		return 1; // Retourne 1 si l'activité est dans le futur
 	}
 }

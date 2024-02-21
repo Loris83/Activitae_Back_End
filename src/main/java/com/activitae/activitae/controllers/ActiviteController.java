@@ -56,6 +56,8 @@ public class ActiviteController {
 		   filter = new GetActivityRequest();
 	   return activiteService.getActivities(filter);
    }
+
+   
    
    @DeleteMapping("/delete/{id}")
    public void deleteActivity (@PathVariable Long id){

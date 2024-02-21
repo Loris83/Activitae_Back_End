@@ -128,7 +128,11 @@ public class UserService {
 	public List<Activite> getFavorite() {
 		User user = getSelf();
 		return user.getFavorites();
-
+	}
+	
+	public List<Activite> getSeenActivity(){
+		User user = getSelf();
+		return user.getSeenActivities();
 	}
 
 	public void deleteUser(Long idUser) {

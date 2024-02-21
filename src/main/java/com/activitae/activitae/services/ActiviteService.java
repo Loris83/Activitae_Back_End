@@ -20,9 +20,12 @@ import com.activitae.activitae.repositories.ActiviteRepository;
 import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.activity.ActiviteFields;
 import com.activitae.activitae.requests.activity.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.GetActivityRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.utils.JwtUtils;
+
+import filters.ActivityFilter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -147,11 +150,50 @@ public class ActiviteService {
 
 	}
 	
-	public int getActiviteByDate(Activite activity) {
+	public int getActiviteByDate(GetActivityResponse activity) {
 		Instant instant = activity.getDate().toInstant();
 		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 			if(LocalDateTime.now().isAfter(dateTime))
 				return 0; //Retourne 0 si l'activité est dans le passé
 		return 1; // Retourne 1 si l'activité est dans le futur
+	}
+	
+	public List<GetActivityResponse> getCreatedActivities(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+		List<GetActivityResponse> activities = getActivities();
+		List<GetActivityResponse> createdActivities = new ArrayList<GetActivityResponse>();
+		for(int i=0;i<activities.size();i++) {
+			if(activities.get(i).getUser().getId().equals(userPrincipal.getId()))
+				createdActivities.add(activities.get(i));
+		}
+		return createdActivities;	
+	}
+	
+	public List<GetActivityResponse> getActivities(GetActivityRequest request) {
+		List<Activite> filtered_activities;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+		User user = userRepository.findById(userPrincipal.getId()).get();
+		if(request.getActivityFilterMode()!=null) {
+			switch(request.getActivityFilterMode()) {
+				case FAVORITES:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterFavorite(request, user));
+					break;
+				
+				case HISTORY:
+					filtered_activities =user.getSeenActivities();
+					break;
+				default:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filter(request));
+			}
+		}else {
+			filtered_activities = activiteRepository.findAll(ActivityFilter.filter(request));
+		}
+		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
+		for (Activite a : filtered_activities) {
+			activities.add(new GetActivityResponse(a));
+		}
+		return activities;
 	}
 }

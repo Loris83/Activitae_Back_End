@@ -52,6 +52,9 @@ public class Activite {
 	@Column(nullable = true)
     private String site;
 	
+	/*@Column(nullable = true)
+	private Integer maxParticipants;*/
+	
 	@Column(nullable = true)
 	@Enumerated(EnumType.ORDINAL)
     ActivityPlaceType place_type;

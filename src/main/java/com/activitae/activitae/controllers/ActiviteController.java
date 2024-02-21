@@ -1,5 +1,6 @@
 package com.activitae.activitae.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.requests.activity.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.GetActivityRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.requests.user.PatchUserRequest;
@@ -48,8 +51,10 @@ public class ActiviteController {
    }
 
    @GetMapping("/get")
-   public List<GetActivityResponse> getActivities(){
-	   return activiteService.getActivities();
+   public List<GetActivityResponse> getActivities(@RequestBody(required=false) GetActivityRequest filter){
+	   if(filter==null)
+		   filter = new GetActivityRequest();
+	   return activiteService.getActivities(filter);
    }
    
    @DeleteMapping("/delete/{id}")
@@ -65,8 +70,37 @@ public class ActiviteController {
    	return activiteService.setActivite(patchActiviteRequest);
    }
    
-   @GetMapping("/get-times/{id}")
-   public int getActivityTime(@PathVariable Long id) {
+   
+   
+   /*@GetMapping("/get-times/{id}")
+   public GetActivityResponse getActivityTime(@PathVariable Long id) {
 	   return activiteService.getActiviteByDate(activiteService.getActivity(id));
+   }*/
+   
+   @GetMapping("/get-past-created-activities")
+   public List<GetActivityResponse> getPastActivities(){
+	   List<GetActivityResponse> activities = activiteService.getCreatedActivities();
+	   List<GetActivityResponse> pastActivities = new ArrayList<GetActivityResponse>();
+	   if(activities.size() != 0) {
+		   for(int i=0;i<activities.size();i++) {
+			  if(activiteService.getActiviteByDate(activities.get(i)) == 0)
+				  pastActivities.add(activities.get(i));
+		   }
+	   }
+	   return pastActivities;
    }
+   
+   @GetMapping("/get-future-activities")
+   public List<GetActivityResponse> getFutureActivities(){
+	   List<GetActivityResponse> activities = activiteService.getActivities();
+	   List<GetActivityResponse> futureActivities = new ArrayList<GetActivityResponse>();
+	   if(activities.size() != 0) {
+		   for(int i=0;i<activities.size();i++) {
+			  if(activiteService.getActiviteByDate(activities.get(i)) == 1)
+				  futureActivities.add(activities.get(i));
+		   }
+	   }
+	   return futureActivities;
+   }
+   
 }

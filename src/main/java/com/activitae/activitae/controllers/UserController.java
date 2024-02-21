@@ -83,6 +83,11 @@ public class UserController {
     	return userService.getFavorite();
     }
     
+    @GetMapping("/get-history")
+    public List<Activite> getHistory(){
+    	return userService.getSeenActivity();
+    }
+    
 
     @PostMapping("/add-favorite/{id}")
     public User addFavorite(@PathVariable Long id) {

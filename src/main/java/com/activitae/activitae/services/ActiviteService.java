@@ -154,4 +154,6 @@ public class ActiviteService {
 				return 0; //Retourne 0 si l'activité est dans le passé
 		return 1; // Retourne 1 si l'activité est dans le futur
 	}
+	
+
 }

@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.activitae.activitae.entities.Activite;
+import com.activitae.activitae.entities.ActivityRegistration;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.repositories.ActiviteRepository;
+import com.activitae.activitae.repositories.ActivityRegistrationRepository;
 import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.activity.ActiviteFields;
 import com.activitae.activitae.requests.activity.CreateActiviteRequest;
@@ -26,6 +28,7 @@ import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.utils.JwtUtils;
 
 import filters.ActivityFilter;
+import filters.ActivityRegistrationFilter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -39,6 +42,9 @@ public class ActiviteService {
 
 	@Autowired
 	private ActiviteRepository activiteRepository;
+	
+	@Autowired
+	private ActivityRegistrationRepository activityRegistrationRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -172,17 +178,25 @@ public class ActiviteService {
 	
 	public List<GetActivityResponse> getActivities(GetActivityRequest request) {
 		List<Activite> filtered_activities;
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
-		User user = userRepository.findById(userPrincipal.getId()).get();
 		if(request.getActivityFilterMode()!=null) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+			User user = userRepository.findById(userPrincipal.getId()).get();
 			switch(request.getActivityFilterMode()) {
+				case REGISTERED:
+					filtered_activities = new ArrayList<Activite>();
+					for(ActivityRegistration a : activityRegistrationRepository.findAll(ActivityRegistrationFilter.filterRegistered(request, user.getId())))
+						filtered_activities.add(a.getActivity());
+					break;
 				case FAVORITES:
 					filtered_activities = activiteRepository.findAll(ActivityFilter.filterFavorite(request, user));
 					break;
 				
 				case HISTORY:
-					filtered_activities =user.getSeenActivities();
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterHistory(request, user));
+					break;
+				case OWNED:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterOwned(request, user.getId()));
 					break;
 				default:
 					filtered_activities = activiteRepository.findAll(ActivityFilter.filter(request));

@@ -1,7 +1,7 @@
 package com.activitae.activitae.requests.activity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
@@ -10,8 +10,10 @@ import com.activitae.activitae.entities.Thematique;
 public class GetActivityRequest {
 	
 	public enum ActivityFilterMode{
+		REGISTERED,
 		FAVORITES,
 		HISTORY,
+		OWNED,
 		ALL
 	}
 	
@@ -23,7 +25,9 @@ public class GetActivityRequest {
 	
 	private String thematic;
 	
-	private BigDecimal price;
+	private BigDecimal minPrice;
+	
+	private BigDecimal maxPrice;
 	
 	private ActivityType type;
 	
@@ -61,14 +65,6 @@ public class GetActivityRequest {
 		this.thematic = thematic;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
 	public ActivityType getType() {
 		return type;
 	}
@@ -83,6 +79,22 @@ public class GetActivityRequest {
 
 	public void setPlace_type(ActivityPlaceType place_type) {
 		this.place_type = place_type;
+	}
+
+	public BigDecimal getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public BigDecimal getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(BigDecimal maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,8 @@ public class ActiviteController {
    }
 
    @GetMapping("/get")
-   public List<GetActivityResponse> getActivities(@RequestBody(required=false) GetActivityRequest filter){
+   public List<GetActivityResponse> getActivities(@ModelAttribute GetActivityRequest filter){
+	   System.out.println(filter);
 	   if(filter==null)
 		   filter = new GetActivityRequest();
 	   return activiteService.getActivities(filter);

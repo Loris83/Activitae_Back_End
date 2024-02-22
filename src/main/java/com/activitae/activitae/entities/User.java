@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -50,7 +51,10 @@ public class User {
 	List<Role> roles;
 
 	@ManyToMany
-	@JoinTable(name = "favorites", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
+	@JoinTable(name = "favorites", 
+	joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "activity_id"),
+	uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "activity_id"}))
 	@JsonManagedReference
 	List<Activite> favorites;
 

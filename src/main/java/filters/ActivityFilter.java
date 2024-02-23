@@ -98,6 +98,9 @@ public class ActivityFilter {
 			if(getActivityRequest.getPlace_type() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("place_type"), getActivityRequest.getPlace_type()));
 			}
+			if(getActivityRequest.getId() != null) {
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("id"), getActivityRequest.getId()));
+			}
 			return predicate;
 		};
 	}

@@ -17,6 +17,8 @@ public class GetActivityRequest {
 		ALL
 	}
 	
+	private Long id;
+	
 	private ActivityFilterMode activityFilterMode;
 	
 	private Date minDate;
@@ -95,6 +97,14 @@ public class GetActivityRequest {
 
 	public void setMaxPrice(BigDecimal maxPrice) {
 		this.maxPrice = maxPrice;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

@@ -73,38 +73,4 @@ public class ActiviteController {
 		patchActiviteRequest.setId(id);
    	return activiteService.setActivite(patchActiviteRequest);
    }
-   
-   
-   
-   /*@GetMapping("/get-times/{id}")
-   public GetActivityResponse getActivityTime(@PathVariable Long id) {
-	   return activiteService.getActiviteByDate(activiteService.getActivity(id));
-   }*/
-   
-   @GetMapping("/get-past-created-activities")
-   public List<GetActivityResponse> getPastActivities(){
-	   List<GetActivityResponse> activities = activiteService.getCreatedActivities();
-	   List<GetActivityResponse> pastActivities = new ArrayList<GetActivityResponse>();
-	   if(activities.size() != 0) {
-		   for(int i=0;i<activities.size();i++) {
-			  if(activiteService.getActiviteByDate(activities.get(i)) == 0)
-				  pastActivities.add(activities.get(i));
-		   }
-	   }
-	   return pastActivities;
-   }
-   
-   @GetMapping("/get-future-activities")
-   public List<GetActivityResponse> getFutureActivities(){
-	   List<GetActivityResponse> activities = activiteService.getActivities();
-	   List<GetActivityResponse> futureActivities = new ArrayList<GetActivityResponse>();
-	   if(activities.size() != 0) {
-		   for(int i=0;i<activities.size();i++) {
-			  if(activiteService.getActiviteByDate(activities.get(i)) == 1)
-				  futureActivities.add(activities.get(i));
-		   }
-	   }
-	   return futureActivities;
-   }
-   
 }

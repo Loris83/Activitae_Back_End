@@ -5,8 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -21,10 +25,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Activites")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Activite {
 	
 	@Id
@@ -69,6 +75,11 @@ public class Activite {
     @JoinTable(name="activity_thematics",joinColumns=@JoinColumn(name="activity_id"), inverseJoinColumns = @JoinColumn(name = "thematic_id"))
     //@JsonManagedReference
     List<Thematique> activity_thematics;
+	
+	//@JsonIdentityReference(alwaysAsId = true)
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id")
+	private Chat chat;
 	
 	public Long getId() {
 		return id;
@@ -164,6 +175,14 @@ public class Activite {
 	
 	public void setActivityThematics(List<Thematique> activity_thematics){
 		this.activity_thematics = activity_thematics;
+	}
+
+	public Chat getChat() {
+		return chat;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
 	}
 	
 	

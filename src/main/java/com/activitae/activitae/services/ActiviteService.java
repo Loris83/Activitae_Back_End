@@ -14,9 +14,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.activitae.activitae.entities.Activite;
+import com.activitae.activitae.entities.Chat;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.entities.CustomUserDetails;
+import com.activitae.activitae.entities.Message;
 import com.activitae.activitae.repositories.ActiviteRepository;
+import com.activitae.activitae.repositories.ChatRepository;
 import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.activity.ActiviteFields;
 import com.activitae.activitae.requests.activity.CreateActiviteRequest;
@@ -36,6 +39,9 @@ public class ActiviteService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private ChatRepository chatRepository;
+	
+	@Autowired
 	private JwtUtils jwtUtils;
 
 	public Activite createActivite(CreateActiviteRequest request) {
@@ -54,7 +60,13 @@ public class ActiviteService {
 		activite.setPlaceType(request.getPlaceType());
 		activite.setActivityThematics(request.getActivityThematics());
 		activite.setUser(user);
-
+		Chat chat = new Chat();
+		chat.setMessages(new ArrayList<Message>());
+		chat.setActivity(activite);
+		
+		chat = chatRepository.save(chat);
+		activite.setChat(chat);
+		
 		return activiteRepository.save(activite);
 	}
 

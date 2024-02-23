@@ -54,12 +54,4 @@ public class Thematique {
 	}
 
 
-
-	
-	
-	
-	
-	
-	
-
 }

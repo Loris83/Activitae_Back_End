@@ -2,6 +2,8 @@ package com.activitae.activitae.controllers;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.requests.JwtAuthenticationResponse;
@@ -74,16 +77,33 @@ public class UserController {
     public User getSelf() {
         return userService.getSelf();
     }
+    
+    @GetMapping("/get-favorite")
+    public List<Activite> getActivity(){
+    	return userService.getFavorite();
+    }
+    
+    @GetMapping("/get-history")
+    public List<Activite> getHistory(){
+    	return userService.getSeenActivity();
+    }
+    
 
     @PostMapping("/add-favorite/{id}")
     public User addFavorite(@PathVariable Long id) {
     	return userService.putFavorite(activiteService.getActivity(id));
     }
     
+    @PostMapping("/add-history/{id}")
+    public User addHistory(@PathVariable Long id) {
+    	return userService.addSeenActivity(activiteService.getActivity(id));
+    }
+    
     @PostMapping("/delete-favorite/{id}")
     public User deleteFavorite(@PathVariable Long id) {
     	return userService.deleteFavorite(activiteService.getActivity(id));
     }
+    
 
     @PatchMapping("/set-self")
     public User setSelf(@RequestBody PatchUserRequest patchUserRequest) {

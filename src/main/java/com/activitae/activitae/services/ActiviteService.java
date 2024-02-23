@@ -15,17 +15,28 @@ import org.springframework.stereotype.Service;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.Chat;
+import com.activitae.activitae.entities.ActivityRegistration;
 import com.activitae.activitae.entities.User;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.Message;
 import com.activitae.activitae.repositories.ActiviteRepository;
 import com.activitae.activitae.repositories.ChatRepository;
+import com.activitae.activitae.repositories.ActivityRegistrationRepository;
 import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.activity.ActiviteFields;
 import com.activitae.activitae.requests.activity.CreateActiviteRequest;
+import com.activitae.activitae.requests.activity.GetActivityRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.utils.JwtUtils;
+
+import filters.ActivityFilter;
+import filters.ActivityRegistrationFilter;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -34,6 +45,9 @@ public class ActiviteService {
 
 	@Autowired
 	private ActiviteRepository activiteRepository;
+	
+	@Autowired
+	private ActivityRegistrationRepository activityRegistrationRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -152,5 +166,60 @@ public class ActiviteService {
 		Optional<Activite> activity = activiteRepository.findById(id);
 		return activity.orElseThrow();
 
+	}
+	
+	public int getActiviteByDate(GetActivityResponse activity) {
+		Instant instant = activity.getDate().toInstant();
+		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+			if(LocalDateTime.now().isAfter(dateTime))
+				return 0; //Retourne 0 si l'activité est dans le passé
+		return 1; // Retourne 1 si l'activité est dans le futur
+	}
+	
+	public List<GetActivityResponse> getCreatedActivities(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+		List<GetActivityResponse> activities = getActivities();
+		List<GetActivityResponse> createdActivities = new ArrayList<GetActivityResponse>();
+		for(int i=0;i<activities.size();i++) {
+			if(activities.get(i).getUser().getId().equals(userPrincipal.getId()))
+				createdActivities.add(activities.get(i));
+		}
+		return createdActivities;	
+	}
+	
+	public List<GetActivityResponse> getActivities(GetActivityRequest request) {
+		List<Activite> filtered_activities;
+		if(request.getActivityFilterMode()!=null) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+			User user = userRepository.findById(userPrincipal.getId()).get();
+			switch(request.getActivityFilterMode()) {
+				case REGISTERED:
+					filtered_activities = new ArrayList<Activite>();
+					for(ActivityRegistration a : activityRegistrationRepository.findAll(ActivityRegistrationFilter.filterRegistered(request, user.getId())))
+						filtered_activities.add(a.getActivity());
+					break;
+				case FAVORITES:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterFavorite(request, user));
+					break;
+				
+				case HISTORY:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterHistory(request, user));
+					break;
+				case OWNED:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filterOwned(request, user.getId()));
+					break;
+				default:
+					filtered_activities = activiteRepository.findAll(ActivityFilter.filter(request));
+			}
+		}else {
+			filtered_activities = activiteRepository.findAll(ActivityFilter.filter(request));
+		}
+		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
+		for (Activite a : filtered_activities) {
+			activities.add(new GetActivityResponse(a));
+		}
+		return activities;
 	}
 }

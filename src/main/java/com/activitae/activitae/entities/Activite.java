@@ -58,6 +58,9 @@ public class Activite {
 	@Column(nullable = true)
     private String site;
 	
+	/*@Column(nullable = true)
+	private Integer maxParticipants;*/
+	
 	@Column(nullable = true)
 	@Enumerated(EnumType.ORDINAL)
     ActivityPlaceType place_type;
@@ -65,6 +68,9 @@ public class Activite {
 	@Column(nullable = true)
 	@Enumerated(EnumType.ORDINAL)
     ActivityType type;
+	
+	@Column(nullable = true)
+    private String image_url;
 	
 	@JoinColumn(name = "user_id")
 	@ManyToOne
@@ -143,6 +149,14 @@ public class Activite {
 
 	public void setSite(String site) {
 		this.site = site;
+	}
+	
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 
 	public User getUser() {

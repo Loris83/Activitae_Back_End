@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -35,6 +36,7 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	//@JsonIgnore
 	@Column(nullable = false)
 	private String password;
 
@@ -59,11 +61,13 @@ public class User {
 	inverseJoinColumns = @JoinColumn(name = "activity_id"),
 	uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "activity_id"}))
 	@JsonManagedReference
+	//@JsonIgnore
 	List<Activite> favorites;
 
 	@ManyToMany
 	@JoinTable(name = "seen_activities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "activity_id"))
 	// @JsonManagedReference
+	@JsonIgnore
 	List<Activite> seen_activities;
 
 	public void setDate(Date date) {

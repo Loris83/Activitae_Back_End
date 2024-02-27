@@ -15,7 +15,7 @@ public class CustomUserDetails implements UserDetails {
 
     private Long id;
     private String username;
-    @JsonIgnore
+   //@JsonIgnore
     private List<Activite> favorites;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;

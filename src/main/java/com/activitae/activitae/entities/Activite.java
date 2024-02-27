@@ -82,7 +82,7 @@ public class Activite {
     //@JsonManagedReference
     List<Thematique> activity_thematics;
 	
-	//@JsonIdentityReference(alwaysAsId = true)
+	@JsonIdentityReference(alwaysAsId = true)
 	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
 	private Chat chat;

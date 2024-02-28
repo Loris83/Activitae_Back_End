@@ -17,6 +17,8 @@ import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.Chat;
 import com.activitae.activitae.entities.ActivityRegistration;
 import com.activitae.activitae.entities.User;
+import com.activitae.activitae.filters.ActivityFilter;
+import com.activitae.activitae.filters.ActivityRegistrationFilter;
 import com.activitae.activitae.entities.CustomUserDetails;
 import com.activitae.activitae.entities.Message;
 import com.activitae.activitae.repositories.ActiviteRepository;
@@ -29,9 +31,6 @@ import com.activitae.activitae.requests.activity.GetActivityRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
 import com.activitae.activitae.utils.JwtUtils;
-
-import filters.ActivityFilter;
-import filters.ActivityRegistrationFilter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

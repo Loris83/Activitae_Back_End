@@ -1,4 +1,4 @@
-package filters;
+package com.activitae.activitae.filters;
 
 import org.springframework.data.jpa.domain.Specification;
 

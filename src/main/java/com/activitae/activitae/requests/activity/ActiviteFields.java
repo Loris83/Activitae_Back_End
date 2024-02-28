@@ -11,6 +11,6 @@ public enum ActiviteFields {
 	place_type,
 	type,
 	user,
-	
+	image_url
 
 }

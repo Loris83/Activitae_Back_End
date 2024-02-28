@@ -20,6 +20,7 @@ public class GetActivityResponse {
     private String info_comp;
     private String site;
     private Long chat_id;
+    private String image_url;
     ActivityPlaceType place_type;
     ActivityType type;
 	private GetUserResponse user;
@@ -94,11 +95,18 @@ public class GetActivityResponse {
 		setSite(activite.getSite());
 		setUser(new GetUserResponse(activite.getUser()));
 		setChat_id(activite.getChat().getId());
+		setImage_url(activite.getImage_url());
 	}
 	public Long getChat_id() {
 		return chat_id;
 	}
 	public void setChat_id(Long chat_id) {
 		this.chat_id = chat_id;
+	}
+	public String getImage_url() {
+		return image_url;
+	}
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 }

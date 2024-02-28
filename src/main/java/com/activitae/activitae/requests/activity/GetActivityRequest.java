@@ -7,6 +7,8 @@ import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
 import com.activitae.activitae.entities.Thematique;
 
+import jakarta.persistence.Column;
+
 public class GetActivityRequest {
 	
 	public enum ActivityFilterMode{
@@ -30,6 +32,8 @@ public class GetActivityRequest {
 	private BigDecimal minPrice;
 	
 	private BigDecimal maxPrice;
+	
+	private Integer maxParticipants;
 	
 	private ActivityType type;
 	
@@ -105,6 +109,14 @@ public class GetActivityRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getMaxParticipants() {
+		return maxParticipants;
+	}
+
+	public void setMaxParticipants(Integer maxParticipants) {
+		this.maxParticipants = maxParticipants;
 	}
 
 }

@@ -48,6 +48,7 @@ public class ActiviteController {
    
    @PostMapping("/create")
    public Activite createActivity(@RequestBody CreateActiviteRequest request){
+	   System.out.println(request.getPlace_type().toString());
 	   return activiteService.createActivite(request);
    }
 

@@ -29,7 +29,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 @Entity
 @Table(name = "Activites")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -60,8 +60,8 @@ public class Activite {
 	@Column(nullable = true)
     private String site;
 	
-	/*@Column(nullable = true)
-	private Integer maxParticipants;*/
+	@Column(nullable = false)
+	private Integer maxParticipants;
 	
 	@Column(nullable = true)
 	@Enumerated(EnumType.ORDINAL)
@@ -169,11 +169,11 @@ public class Activite {
 		this.user = user;
 	}
 	
-	public ActivityPlaceType getPlaceType(){
+	public ActivityPlaceType getPlace_type(){
 		return place_type;
 	}
 	
-	public void setPlaceType(ActivityPlaceType place_type) {
+	public void setPlace_type(ActivityPlaceType place_type) {
 		this.place_type = place_type;
 	}
 	
@@ -199,6 +199,14 @@ public class Activite {
 
 	public void setChat(Chat chat) {
 		this.chat = chat;
+	}
+
+	public Integer getMaxParticipants() {
+		return maxParticipants;
+	}
+
+	public void setMaxParticipants(Integer maxParticipants) {
+		this.maxParticipants = maxParticipants;
 	}
 	
 	

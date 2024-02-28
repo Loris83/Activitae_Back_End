@@ -69,8 +69,9 @@ public class ActiviteService {
 		activite.setPrice(request.getPrice());
 		activite.setSite(request.getSite());
 		activite.setTitre(request.getTitre());
+		activite.setPlace_type(request.getPlace_type());
 		activite.setType(request.getType());
-		activite.setPlaceType(request.getPlaceType());
+		activite.setMaxParticipants(request.getMaxParticipants());
 		activite.setActivityThematics(request.getActivityThematics());
 		activite.setUser(user);
 		Chat chat = new Chat();
@@ -146,7 +147,7 @@ public class ActiviteService {
 		}
 
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.place_type)) {
-			activite.setPlaceType(patchActiviteRequest.getPlace_type());
+			activite.setPlace_type(patchActiviteRequest.getPlace_type());
 		}
 
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.type)) {

@@ -35,6 +35,8 @@ public class CreateActiviteRequest {
     private ActivityPlaceType place_type;
     
     private ActivityType type;
+
+	private Integer maxParticipants;
     
     List<Thematique> activity_thematics;
 
@@ -94,11 +96,11 @@ public class CreateActiviteRequest {
 		this.site = site;
 	}
 	
-	public ActivityPlaceType getPlaceType(){
+	public ActivityPlaceType getPlace_type(){
 		return place_type;
 	}
 	
-	public void setPlaceType(ActivityPlaceType place_type) {
+	public void setPlace_type(ActivityPlaceType place_type) {
 		this.place_type = place_type;
 	}
 	
@@ -116,5 +118,13 @@ public class CreateActiviteRequest {
 	
 	public void setActivityThematics(List<Thematique> activity_thematics){
 		this.activity_thematics = activity_thematics;
+	}
+
+	public Integer getMaxParticipants() {
+		return maxParticipants;
+	}
+
+	public void setMaxParticipants(Integer maxParticipants) {
+		this.maxParticipants = maxParticipants;
 	}
 }

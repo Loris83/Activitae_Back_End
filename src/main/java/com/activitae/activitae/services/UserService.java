@@ -19,6 +19,7 @@ import com.activitae.activitae.repositories.UserRepository;
 import com.activitae.activitae.requests.RegistrationRequest;
 import com.activitae.activitae.requests.user.PatchUserRequest;
 import com.activitae.activitae.requests.user.UserFields;
+import com.activitae.activitae.requests.user.get.GetUserResponse;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -60,6 +61,11 @@ public class UserService {
 		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
 		User user = userRepository.findById(userPrincipal.getId()).get();
 		return user;
+	}
+	
+	public GetUserResponse get(Long id) {
+		User user = userRepository.findById(id).get();
+		return new GetUserResponse(user);
 	}
 
 	public User putFavorite(Activite activity) {

@@ -30,6 +30,7 @@ import com.activitae.activitae.requests.RegistrationRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.services.ActiviteService;
 import com.activitae.activitae.requests.user.PatchUserRequest;
+import com.activitae.activitae.requests.user.get.GetUserResponse;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
 
@@ -66,7 +67,7 @@ public class UserController {
 
         String jwt = jwtUtils.generateJwtToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
-    }
+    } 
 
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationRequest request) {
@@ -76,6 +77,12 @@ public class UserController {
     @GetMapping("/get-self")
     public User getSelf() {
         return userService.getSelf();
+    }
+    
+
+    @GetMapping("/get/{id}")
+    public GetUserResponse get(@PathVariable Long id) {
+        return userService.get(id);
     }
     
     @GetMapping("/get-favorite")

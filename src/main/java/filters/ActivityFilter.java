@@ -18,7 +18,7 @@ public class ActivityFilter {
 		return(Root<Activite> activity, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
 			Predicate predicate = criteriaBuilder.conjunction();
 			if(getActivityRequest.getMinDate() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThan(activity.get("date"),getActivityRequest.getMinDate()));
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThanOrEqualTo(activity.get("date"),getActivityRequest.getMinDate()));
 			}
 			if(getActivityRequest.getMaxDate() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.lessThan(activity.get("date"),getActivityRequest.getMaxDate()));

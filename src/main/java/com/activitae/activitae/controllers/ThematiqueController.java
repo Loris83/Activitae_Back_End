@@ -26,7 +26,7 @@ public class ThematiqueController {
 	@Autowired
 	private ThematiqueService thematiqueService ;
 	
-	@GetMapping("/get-thematiques")
+	@GetMapping("/get")
 	public List<Thematique> getThematiques(){
 		return thematiqueService.getThematiques();
 	}

@@ -120,6 +120,10 @@ public class ActiviteService {
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.titre)) {
 			activite.setTitre(patchActiviteRequest.getTitre());
 		}
+		
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.image_url)) {
+			activite.setImage_url(patchActiviteRequest.getImage_url());
+		}
 
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.date)) {
 			activite.setDate(patchActiviteRequest.getDate());

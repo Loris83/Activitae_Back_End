@@ -17,6 +17,7 @@ import com.activitae.activitae.entities.Avatar;
 import com.activitae.activitae.entities.Picture;
 import com.activitae.activitae.requests.UploadPictureRequest;
 import com.activitae.activitae.requests.picture.SetAvatarRequest;
+import com.activitae.activitae.requests.picture.UploadPictureResponse;
 import com.activitae.activitae.services.PictureService;
 import com.activitae.activitae.utils.JwtUtils;
 
@@ -34,10 +35,10 @@ public class PictureController {
 	private JwtUtils jwtUtils;
 	
 	@PostMapping("/upload")
-	public Picture upload(@RequestBody MultipartFile file){
+	public UploadPictureResponse upload(@RequestBody MultipartFile file){
 		UploadPictureRequest request = new UploadPictureRequest();
 		request.setFile(file);
-		return pictureService.uploadPicture(request);
+		return new UploadPictureResponse(pictureService.uploadPicture(request));
 	}
 	
 	@GetMapping("/get/{id}")

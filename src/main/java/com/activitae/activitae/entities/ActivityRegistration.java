@@ -22,13 +22,14 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
-@Table(name = "ActivityRegistration")
+@Table(name = "ActivityRegistration", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "activity_id"}))
 public class ActivityRegistration {
 	
 	@Id

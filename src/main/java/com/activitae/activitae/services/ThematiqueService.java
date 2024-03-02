@@ -29,7 +29,7 @@ public class ThematiqueService {
 	
 	public Thematique addThematique(CreateThematicRequest request) {
 		Thematique thematic = new Thematique();
-		thematic.setName(request.getName());
+		thematic.setItem(request.getItem());
 		thematic.setImageUrl(request.getImageUrl());
 		return thematiqueRepository.save(thematic);
 	}

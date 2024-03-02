@@ -20,7 +20,7 @@ public class Thematique {
 	private Long Id;
 	
 	@Column(nullable = false)
-	private String name;
+	private String item;
 	
 	
 	@Column(nullable = true)
@@ -37,13 +37,13 @@ public class Thematique {
 	}
 
 
-	public String getName() {
-		return name;
+	public String getItem() {
+		return item;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setItem(String item) {
+		this.item = item;
 	}
 
 

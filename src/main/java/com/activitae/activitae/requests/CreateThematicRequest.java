@@ -7,14 +7,14 @@ import jakarta.persistence.Id;
 
 public class CreateThematicRequest {
 
-	private String name;
+	private String item;
 	private String  imageUrl;
     
-	public String getName() {
-		return name;
+	public String getItem() {
+		return item;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setItem(String item) {
+		this.item = item;
 	}
 	public String getImageUrl() {
 		return imageUrl;
@@ -23,8 +23,8 @@ public class CreateThematicRequest {
 		this.imageUrl = imageUrl;
 	}
 
-    public CreateThematicRequest(String name, String imageUrl) {
-    	setName(name);
+    public CreateThematicRequest(String item, String imageUrl) {
+    	setItem(item);
     	setImageUrl(imageUrl);
     }
 }

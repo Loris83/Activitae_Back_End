@@ -60,6 +60,12 @@ public class Activite {
 	@Column(nullable = true)
     private String site;
 	
+	@Column(nullable = true)
+	private Integer minAge;
+	
+	@Column(nullable = true)
+	private Integer maxAge;
+	
 	@Column(nullable = false)
 	private Integer maxParticipants;
 	
@@ -70,6 +76,10 @@ public class Activite {
 	@Column(nullable = true)
 	@Enumerated(EnumType.ORDINAL)
     ActivityType type;
+	
+	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
+    EntrantType entrantType;
 	
 	@Column(nullable = true)
     private String image_url;
@@ -185,6 +195,14 @@ public class Activite {
 		this.type = type;
 	}
 	
+	public EntrantType getEntrantType(){
+		return entrantType;
+	}
+	
+	public void setEntrantType(EntrantType entrantType){
+		this.entrantType = entrantType;
+	}
+	
 	public List<Thematique> getActivityThematics(){
 		return activity_thematics;
 	}
@@ -207,6 +225,22 @@ public class Activite {
 
 	public void setMaxParticipants(Integer maxParticipants) {
 		this.maxParticipants = maxParticipants;
+	}
+
+	public Integer getMinAge() {
+		return minAge;
+	}
+
+	public void setMinAge(Integer minAge) {
+		this.minAge = minAge;
+	}
+
+	public Integer getMaxAge() {
+		return maxAge;
+	}
+
+	public void setMaxAge(Integer maxAge) {
+		this.maxAge = maxAge;
 	}
 	
 	

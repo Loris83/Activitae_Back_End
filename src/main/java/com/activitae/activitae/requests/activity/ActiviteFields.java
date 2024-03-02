@@ -11,6 +11,10 @@ public enum ActiviteFields {
 	place_type,
 	type,
 	user,
-	image_url
+	image_url,
+	maxAge,
+	minAge,
+	entrantType,
+	maxParticipants
 
 }

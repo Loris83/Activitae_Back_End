@@ -73,6 +73,9 @@ public class ActiviteService {
 		activite.setType(request.getType());
 		activite.setMaxParticipants(request.getMaxParticipants());
 		activite.setActivityThematics(request.getActivityThematics());
+		activite.setMaxAge(request.getMaxAge());
+		activite.setMinAge(request.getMinAge());
+		activite.setEntrantType(request.getEntrantType());
 		activite.setUser(user);
 		Chat chat = new Chat();
 		chat.setMessages(new ArrayList<Message>());
@@ -115,7 +118,7 @@ public class ActiviteService {
 		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
 
 		if (userPrincipal.getId() != activite.getUser().getId()) {
-			throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
+			throw new AccessDeniedException("Vous n'êtes pas autorisé à modifier cette activité");
 		}
 
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.titre)) {
@@ -160,6 +163,18 @@ public class ActiviteService {
 
 		if (patchActiviteRequest.getFields().contains(ActiviteFields.user)) {
 			activite.setUser(patchActiviteRequest.getUser());
+		}
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.maxAge)) {
+			activite.setMaxAge(patchActiviteRequest.getMaxAge());
+		}
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.minAge)) {
+			activite.setMinAge(patchActiviteRequest.getMinAge());
+		}
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.maxParticipants)) {
+			activite.setMaxParticipants(patchActiviteRequest.getMaxParticipants());
+		}
+		if (patchActiviteRequest.getFields().contains(ActiviteFields.entrantType)) {
+			activite.setEntrantType(patchActiviteRequest.getEntrantType());
 		}
 
 		return activiteRepository.save(activite);

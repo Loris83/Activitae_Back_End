@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
+import com.activitae.activitae.entities.EntrantType;
 import com.activitae.activitae.entities.Thematique;
 import com.activitae.activitae.entities.User;
 
@@ -35,8 +36,14 @@ public class CreateActiviteRequest {
     private ActivityPlaceType place_type;
     
     private ActivityType type;
+    
+    private EntrantType entrantType;
 
 	private Integer maxParticipants;
+	
+	private Integer minAge;
+	
+	private Integer maxAge;
     
     List<Thematique> activity_thematics;
 
@@ -126,5 +133,29 @@ public class CreateActiviteRequest {
 
 	public void setMaxParticipants(Integer maxParticipants) {
 		this.maxParticipants = maxParticipants;
+	}
+	
+	public Integer getMinAge() {
+		return minAge;
+	}
+
+	public void setMinAge(Integer minAge) {
+		this.minAge = minAge;
+	}
+
+	public Integer getMaxAge() {
+		return maxAge;
+	}
+
+	public void setMaxAge(Integer maxAge) {
+		this.maxAge = maxAge;
+	}
+	
+	public EntrantType getEntrantType(){
+		return entrantType;
+	}
+	
+	public void setEntrantType(EntrantType entrantType){
+		this.entrantType = entrantType;
 	}
 }

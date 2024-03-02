@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
+import com.activitae.activitae.entities.EntrantType;
 import com.activitae.activitae.entities.User;
 
 
@@ -25,6 +26,10 @@ public class PatchActiviteRequest {
     ActivityPlaceType place_type;
     ActivityType type;
 	private User user;
+	private EntrantType entrantType;
+	private Integer maxParticipants;
+	private Integer minAge;
+	private Integer maxAge;
 	
 	public List<ActiviteFields> getFields() {
 		return fields;
@@ -104,6 +109,30 @@ public class PatchActiviteRequest {
 	}
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+	public EntrantType getEntrantType() {
+		return entrantType;
+	}
+	public void setEntrantType(EntrantType entrantType) {
+		this.entrantType = entrantType;
+	}
+	public Integer getMaxParticipants() {
+		return maxParticipants;
+	}
+	public void setMaxParticipants(Integer maxParticipants) {
+		this.maxParticipants = maxParticipants;
+	}
+	public Integer getMinAge() {
+		return minAge;
+	}
+	public void setMinAge(Integer minAge) {
+		this.minAge = minAge;
+	}
+	public Integer getMaxAge() {
+		return maxAge;
+	}
+	public void setMaxAge(Integer maxAge) {
+		this.maxAge = maxAge;
 	}
 	
 	

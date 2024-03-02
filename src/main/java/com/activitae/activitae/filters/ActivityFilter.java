@@ -41,6 +41,15 @@ public class ActivityFilter {
 			if(getActivityRequest.getId() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("id"), getActivityRequest.getId()));
 			}
+			if(getActivityRequest.getEntrantType() != null) {
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("entrantType"), getActivityRequest.getEntrantType()));
+			}
+			if(getActivityRequest.getMinAge() != null) {
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("minAge"),getActivityRequest.getMinAge()));
+			}
+			if(getActivityRequest.getMaxAge() != null) {
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThanOrEqualTo(activity.get("maxAge"),getActivityRequest.getMaxAge()));
+			}
 			return predicate;
 		};
 	}

@@ -172,26 +172,6 @@ public class ActiviteService {
 
 	}
 	
-	public int getActiviteByDate(GetActivityResponse activity) {
-		Instant instant = activity.getDate().toInstant();
-		LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-			if(LocalDateTime.now().isAfter(dateTime))
-				return 0; //Retourne 0 si l'activité est dans le passé
-		return 1; // Retourne 1 si l'activité est dans le futur
-	}
-	
-	public List<GetActivityResponse> getCreatedActivities(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
-		List<GetActivityResponse> activities = getActivities();
-		List<GetActivityResponse> createdActivities = new ArrayList<GetActivityResponse>();
-		for(int i=0;i<activities.size();i++) {
-			if(activities.get(i).getUser().getId().equals(userPrincipal.getId()))
-				createdActivities.add(activities.get(i));
-		}
-		return createdActivities;	
-	}
-	
 	public List<GetActivityResponse> getActivities(GetActivityRequest request) {
 		List<Activite> filtered_activities;
 		if(request.getActivityFilterMode()!=null) {

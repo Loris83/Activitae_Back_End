@@ -14,6 +14,7 @@ import com.activitae.activitae.entities.User;
 @Repository
 public interface ActivityRegistrationRepository extends JpaRepository<ActivityRegistration, Long>, JpaSpecificationExecutor<ActivityRegistration> {
 	List<ActivityRegistration> findByUser(User user);
+	List<ActivityRegistration> findByActivity(Activite activity);
 	List<ActivityRegistration> findAll();
 	Optional<ActivityRegistration> findById(Long id);
 }

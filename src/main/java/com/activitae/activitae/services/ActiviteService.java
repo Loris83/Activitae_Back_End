@@ -104,9 +104,8 @@ public class ActiviteService {
 
 	public List<GetActivityResponse> getActivities() {
 		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
-		for (Activite a : activiteRepository.findAll()) {
-			activities.add(new GetActivityResponse(a));
-		}
+		for (Activite a : activiteRepository.findAll()) 
+			activities.add(new GetActivityResponse(a, activityRegistrationRepository.findByActivity(a).size()));
 		return activities;
 	}
 
@@ -181,10 +180,17 @@ public class ActiviteService {
 
 	}
 
-	public Activite getActivity(Long id) {
+	public GetActivityResponse getActivity(Long id) {
+		Optional<Activite> activity = activiteRepository.findById(id);
+		if(activity.isEmpty())return null;
+		Activite a = activity.orElseThrow();
+		return new GetActivityResponse(a, activityRegistrationRepository.findByActivity(a).size());
+
+	}
+	
+	public Activite get(Long id) {
 		Optional<Activite> activity = activiteRepository.findById(id);
 		return activity.orElseThrow();
-
 	}
 	
 	public List<GetActivityResponse> getActivities(GetActivityRequest request) {
@@ -217,7 +223,7 @@ public class ActiviteService {
 		}
 		List<GetActivityResponse> activities = new ArrayList<GetActivityResponse>();
 		for (Activite a : filtered_activities) {
-			activities.add(new GetActivityResponse(a));
+			activities.add(new GetActivityResponse(a,activityRegistrationRepository.findByActivity(a).size()));
 		}
 		return activities;
 	}

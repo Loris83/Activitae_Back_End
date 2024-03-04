@@ -51,7 +51,7 @@ public class ActivityReportController {
    
    @PostMapping("/{id}")
    public ActivityReport reportActivity(@PathVariable Long id) {
-	   Activite activity = activiteService.getActivity(id);
+	   Activite activity = activiteService.get(id);
 	   return activityReportService.reportActivity(activity);	
    }
    

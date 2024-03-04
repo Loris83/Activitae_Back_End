@@ -24,6 +24,8 @@ public class GetActivityResponse {
     ActivityPlaceType place_type;
     ActivityType type;
 	private GetUserResponse user;
+	private Integer maxParticipants;
+	private Integer nbParticipants;
 	
 	public Long getId() {
 		return id;
@@ -84,18 +86,22 @@ public class GetActivityResponse {
 		
 	}
 	
-	public GetActivityResponse(Activite activite) {
-		setId(activite.getId());
-		setTitre(activite.getTitre());
-		setDate(activite.getDate());
-		setAddress(activite.getAddress());
-		setPrice(activite.getPrice());
-		setDescriptif(activite.getDescriptif());
-		setInfo_comp(activite.getInfo_comp());
-		setSite(activite.getSite());
-		setUser(new GetUserResponse(activite.getUser()));
-		setChat_id(activite.getChat().getId());
-		setImage_url(activite.getImage_url());
+	public GetActivityResponse(Activite activite, Integer nbParticipants) {
+		if(activite != null) {
+			setId(activite.getId());
+			setTitre(activite.getTitre());
+			setDate(activite.getDate());
+			setAddress(activite.getAddress());
+			setPrice(activite.getPrice());
+			setDescriptif(activite.getDescriptif());
+			setInfo_comp(activite.getInfo_comp());
+			setSite(activite.getSite());
+			setUser(new GetUserResponse(activite.getUser()));
+			setChat_id(activite.getChat().getId());
+			setImage_url(activite.getImage_url());
+			setMaxParticipants(maxParticipants);
+			setNbParticipants(nbParticipants);
+		}
 	}
 	public Long getChat_id() {
 		return chat_id;
@@ -108,5 +114,17 @@ public class GetActivityResponse {
 	}
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+	public Integer getMaxParticipants() {
+		return maxParticipants;
+	}
+	public void setMaxParticipants(Integer maxParticipants) {
+		this.maxParticipants = maxParticipants;
+	}
+	public Integer getNbParticipants() {
+		return nbParticipants;
+	}
+	public void setNbParticipants(Integer nbParticipants) {
+		this.nbParticipants = nbParticipants;
 	}
 }

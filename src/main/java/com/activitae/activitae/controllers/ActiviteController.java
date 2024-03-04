@@ -59,6 +59,11 @@ public class ActiviteController {
 		   filter = new GetActivityRequest();
 	   return activiteService.getActivities(filter);
    }
+   
+   @GetMapping("/get/{id}")
+   public GetActivityResponse getActivity(@PathVariable Long id){
+	   return activiteService.getActivity(id);
+   }
 
    
    

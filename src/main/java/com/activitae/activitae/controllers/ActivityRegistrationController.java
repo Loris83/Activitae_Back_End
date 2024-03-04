@@ -48,7 +48,7 @@ public class ActivityRegistrationController {
    
    @PostMapping("/register/{id}")
    public ActivityRegistration registerActivity(@PathVariable Long id) {
-	   Activite activity = activiteService.getActivity(id);
+	   Activite activity = activiteService.get(id);
 	   return activityRegistrationService.registerActivity(activity);	
    }
    

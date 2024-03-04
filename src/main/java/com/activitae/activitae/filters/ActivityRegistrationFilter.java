@@ -21,27 +21,7 @@ public class ActivityRegistrationFilter {
 			Path<Activite> activity = activityRegistration.get("activity");
 			Path<User> user = activityRegistration.get("user");
 			predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(user.get("id"), user_id));
-			if(getActivityRequest.getMinDate() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThan(activity.get("date"),getActivityRequest.getMinDate()));
-			}
-			if(getActivityRequest.getMaxDate() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.lessThan(activity.get("date"),getActivityRequest.getMaxDate()));
-			}
-			if(getActivityRequest.getThematic() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.isMember(getActivityRequest.getThematic(), activity.get("activity_thematics").get("name")));
-			}
-			if(getActivityRequest.getMinPrice() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThan(activity.get("price"),getActivityRequest.getMinPrice()));
-			}
-			if(getActivityRequest.getMaxPrice() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.lessThan(activity.get("price"),getActivityRequest.getMaxPrice()));
-			}
-			if(getActivityRequest.getType() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("type"), getActivityRequest.getType()));
-			}
-			if(getActivityRequest.getPlace_type() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.equal(activity.get("place_type"), getActivityRequest.getPlace_type()));
-			}
+			predicate=ActivityFilter.setupFilter(predicate, criteriaBuilder, getActivityRequest, activity);
 			return predicate;
 		};
 	}

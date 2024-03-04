@@ -31,6 +31,8 @@ public class GetActivityRequest {
 	
 	private String thematic;
 	
+	private String search;
+	
 	private BigDecimal minPrice;
 	
 	private BigDecimal maxPrice;
@@ -149,6 +151,14 @@ public class GetActivityRequest {
 
 	public void setMaxAge(Integer maxAge) {
 		this.maxAge = maxAge;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 
 }

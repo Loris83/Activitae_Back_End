@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.User;
@@ -44,6 +46,9 @@ public class ActivityRegistrationService {
 	private JwtUtils jwtUtils;
 
 	public ActivityRegistration registerActivity(Activite activity) {
+		if(activity.getMaxParticipants() != null && activiteRegistrationRepository.findByActivity(activity).size() >= activity.getMaxParticipants()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le nombre maximum de participants à cette activité a été atteint.");
+		}
 		ActivityRegistration registration = new ActivityRegistration();
 		registration.setUser(userService.getSelf());
 		registration.setActivity(activity);

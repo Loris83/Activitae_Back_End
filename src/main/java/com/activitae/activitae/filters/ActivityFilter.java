@@ -1,5 +1,9 @@
 package com.activitae.activitae.filters;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.jpa.domain.Specification;
 
 import com.activitae.activitae.entities.Activite;
@@ -19,6 +23,7 @@ public class ActivityFilter {
 		return(Root<Activite> activity, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
 			Predicate predicate = criteriaBuilder.conjunction();
 			predicate = setupFilter(predicate, criteriaBuilder, getActivityRequest, activity);
+			
 			return predicate;
 		};
 	}
@@ -88,6 +93,21 @@ public class ActivityFilter {
 			}
 			if(getActivityRequest.getMaxAge() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThanOrEqualTo(activity.get("maxAge"),getActivityRequest.getMaxAge()));
+			}
+			
+			if(getActivityRequest.getSearch() != null) {
+				List<String> searches = Arrays.stream(getActivityRequest.getSearch().split(" "))
+                        .filter(s -> !s.isBlank())
+                        .collect(Collectors.toList());
+				for(String search : searches) {
+					Predicate searchPredicate = criteriaBuilder.disjunction();
+					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("titre")), "%"+search.toUpperCase()+"%"));
+					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("descriptif")), "%"+search.toUpperCase()+"%"));
+					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("info_comp")), "%"+search.toUpperCase()+"%"));
+					predicate = criteriaBuilder.and(predicate, searchPredicate);
+				}
+				
+				
 			}
 			return predicate;
 		}

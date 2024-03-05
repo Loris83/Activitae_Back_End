@@ -101,9 +101,11 @@ public class ActivityFilter {
                         .collect(Collectors.toList());
 				for(String search : searches) {
 					Predicate searchPredicate = criteriaBuilder.disjunction();
+
 					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("titre")), "%"+search.toUpperCase()+"%"));
 					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("descriptif")), "%"+search.toUpperCase()+"%"));
 					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.upper(activity.get("info_comp")), "%"+search.toUpperCase()+"%"));
+					searchPredicate = criteriaBuilder.or(searchPredicate, criteriaBuilder.like(criteriaBuilder.concat("#", criteriaBuilder.toString(activity.get("id"))), search));
 					predicate = criteriaBuilder.and(predicate, searchPredicate);
 				}
 				

@@ -36,6 +36,8 @@ public class PictureController {
 	
 	@PostMapping("/upload")
 	public UploadPictureResponse upload(@RequestBody MultipartFile file){
+		String contentType = file.getContentType();
+	    if (contentType == null || !contentType.startsWith("image"))return null;
 		UploadPictureRequest request = new UploadPictureRequest();
 		request.setFile(file);
 		return new UploadPictureResponse(pictureService.uploadPicture(request));

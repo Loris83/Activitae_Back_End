@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.CustomUserDetails;
@@ -31,6 +33,9 @@ import com.activitae.activitae.requests.user.PatchUserRequest;
 import com.activitae.activitae.services.ActiviteService;
 import com.activitae.activitae.services.UserService;
 import com.activitae.activitae.utils.JwtUtils;
+import com.activitae.activitae.utils.UrlChecking;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -48,7 +53,6 @@ public class ActiviteController {
    
    @PostMapping("/create")
    public Activite createActivity(@RequestBody CreateActiviteRequest request){
-	   System.out.println(request.getPlace_type().toString());
 	   return activiteService.createActivite(request);
    }
 
@@ -73,8 +77,10 @@ public class ActiviteController {
    }
    
    @PatchMapping("/update/{id}")
-   public Activite setSelf(@RequestBody PatchActiviteRequest patchActiviteRequest, @PathVariable Long id) {
-
+   public Activite setSelf(HttpServletRequest hsrequest, @RequestBody PatchActiviteRequest patchActiviteRequest, @PathVariable Long id) {
+	   if(patchActiviteRequest.getImage_url()!=null&&patchActiviteRequest.getImage_url()!=""&&!UrlChecking.checkUrl(hsrequest, patchActiviteRequest.getImage_url())) {
+	   		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "L'url de l'image n'est pas valide");
+	   	}
 		
 		patchActiviteRequest.setId(id);
    	return activiteService.setActivite(patchActiviteRequest);

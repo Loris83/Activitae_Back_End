@@ -52,7 +52,7 @@ public class UserService {
 		List<Activite> favorites = new ArrayList<Activite>();
 		user.setFavorites(favorites);
 		List<Activite> seen_activities = new ArrayList<Activite>();
-		user.setSeenActivies(seen_activities);
+		user.setSeen_activies(seen_activities);
 		return userRepository.save(user);
 	}
 
@@ -66,6 +66,13 @@ public class UserService {
 	public GetUserResponse get(Long id) {
 		User user = userRepository.findById(id).get();
 		return new GetUserResponse(user);
+	}
+	
+	public List<GetUserResponse> getAll() {
+		List<GetUserResponse> users = new ArrayList<GetUserResponse>();
+		for (User u : userRepository.findAll())
+			users.add(new GetUserResponse(u));
+		return users;
 	}
 
 	public User putFavorite(Activite activity) {
@@ -87,10 +94,20 @@ public class UserService {
 		user.setFavorites(favorites);
 		return userRepository.save(user);
 	}
+	
+	public User deleteFavoriteByUserId(Activite activity, Long userId) {
+		User user = userRepository.findById(userId).get();
+		List<Activite> favorites = user.getFavorites();
+		if (favorites == null)
+			return userRepository.save(user);
+		favorites.remove(activity);
+		user.setFavorites(favorites);
+		return userRepository.save(user);
+	}
 
 	public User addSeenActivity(Activite activity) {
 		User user = getSelf();
-		List<Activite> seen_activities = user.getSeenActivities();
+		List<Activite> seen_activities = user.getSeen_activities();
 		if (seen_activities.size() == 10) {
 			seen_activities.remove(0);
 			seen_activities.add(activity);
@@ -103,7 +120,27 @@ public class UserService {
 			}
 		}
 		seen_activities.add(activity);
-		user.setSeenActivies(seen_activities);
+		user.setSeen_activies(seen_activities);
+		return userRepository.save(user);
+	}
+	
+	public User deleteSeenActivity(Activite activity) {
+		User user = getSelf();
+		List<Activite> history = user.getSeen_activities();
+		if (history == null)
+			return userRepository.save(user);
+		history.remove(activity);
+		user.setSeen_activies(history);
+		return userRepository.save(user);
+	}
+	
+	public User deleteSeenActivityByUserId(Activite activity, Long userId) {
+		User user = userRepository.findById(userId).get();
+		List<Activite> history = user.getSeen_activities();
+		if (history == null)
+			return userRepository.save(user);
+		history.remove(activity);
+		user.setSeen_activies(history);
 		return userRepository.save(user);
 	}
 
@@ -138,7 +175,7 @@ public class UserService {
 	
 	public List<Activite> getSeenActivity(){
 		User user = getSelf();
-		return user.getSeenActivities();
+		return user.getSeen_activities();
 	}
 
 	public void deleteUser(Long idUser) {

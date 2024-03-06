@@ -18,6 +18,8 @@ public class GetUserResponse {
     private String image_url;
     
     private List<Activite> favorites;
+    
+    private List<Activite> seen_activities;
 
 	public Long getId() {
 		return id;
@@ -65,9 +67,18 @@ public class GetUserResponse {
 		setSiret(user.getSiret());
 		setImage_url(user.getImage_url());
 		setFavorites(user.getFavorites());
+		setSeen_activities(user.getSeen_activities());
 	}
 	
 	public GetUserResponse() {
 		
+	}
+
+	public List<Activite> getSeen_activities() {
+		return seen_activities;
+	}
+
+	public void setSeen_activities(List<Activite> seen_activities) {
+		this.seen_activities = seen_activities;
 	}
 }

@@ -51,7 +51,7 @@ public class ActivityFilter {
 			return(Root<Activite> activity, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
 				Predicate predicate = criteriaBuilder.conjunction();
 				
-				predicate = criteriaBuilder.and(predicate,activity.in(user.getSeenActivities()));
+				predicate = criteriaBuilder.and(predicate,activity.in(user.getSeen_activities()));
 				predicate = setupFilter(predicate, criteriaBuilder, getActivityRequest, activity);
 				
 				return predicate;

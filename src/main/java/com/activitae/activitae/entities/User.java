@@ -145,11 +145,11 @@ public class User {
 		this.favorites = favorites;
 	}
 
-	public List<Activite> getSeenActivities() {
+	public List<Activite> getSeen_activities() {
 		return seen_activities;
 	}
 
-	public void setSeenActivies(List<Activite> seen_activities) {
+	public void setSeen_activies(List<Activite> seen_activities) {
 		this.seen_activities = seen_activities;
 	}
 

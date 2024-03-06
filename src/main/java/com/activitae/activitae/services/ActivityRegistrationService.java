@@ -35,9 +35,6 @@ public class ActivityRegistrationService {
 
 	@Autowired
 	private ActivityRegistrationRepository activiteRegistrationRepository;
-
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
     private UserService userService;
@@ -54,5 +51,19 @@ public class ActivityRegistrationService {
 		registration.setActivity(activity);
 		return activiteRegistrationRepository.save(registration);
 		
+	}
+	
+	public List<ActivityRegistration> get(Activite activity) {
+		List<ActivityRegistration> activityRegistrations = new ArrayList<ActivityRegistration>();
+		activityRegistrations = activiteRegistrationRepository.findByActivity(activity);
+		return activityRegistrations;
+	}
+	
+	public void deleteRegistrations(Activite activity) {//supprime toutes les inscriptions d'une activité
+		List<ActivityRegistration> activityRegistrations = get(activity);
+		if(activityRegistrations != null) {
+			for(int i=0;i<activityRegistrations.size();i++)
+				activiteRegistrationRepository.delete(activityRegistrations.get(i));
+		}
 	}
 }

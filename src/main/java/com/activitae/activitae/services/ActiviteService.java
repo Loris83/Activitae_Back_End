@@ -30,6 +30,7 @@ import com.activitae.activitae.requests.activity.CreateActiviteRequest;
 import com.activitae.activitae.requests.activity.GetActivityRequest;
 import com.activitae.activitae.requests.activity.GetActivityResponse;
 import com.activitae.activitae.requests.activity.PatchActiviteRequest;
+import com.activitae.activitae.requests.user.get.GetUserResponse;
 import com.activitae.activitae.utils.JwtUtils;
 
 import java.time.Instant;
@@ -53,6 +54,15 @@ public class ActiviteService {
 
 	@Autowired
 	private ChatRepository chatRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ActivityRegistrationService activityRegistrationService;
+	
+	@Autowired
+	private ActivityReportService activityReportService;
 	
 	@Autowired
 	private JwtUtils jwtUtils;
@@ -98,7 +108,25 @@ public class ActiviteService {
 		if (!activite.getUser().getId().equals(userPrincipal.getId())) {
 			throw new AccessDeniedException("Vous n'êtes pas autorisé à supprimer cette activité");
 		}
-
+		
+		List<GetUserResponse> users = userService.getAll();
+		for(int i=0;i<users.size();i++) {
+			if(users.get(i).getSeen_activities()!=null) {
+				for(int j=0;j<users.get(i).getSeen_activities().size();j++) {
+					if (users.get(i).getSeen_activities().get(j).getId() == idActivite)
+						System.out.println(users.get(i).getSeen_activities().get(j).getId());
+						userService.deleteSeenActivityByUserId(activite,users.get(i).getId());
+				}
+			}
+			if(users.get(i).getFavorites()!=null) {
+				for(int j=0;j<users.get(i).getFavorites().size();j++) {
+					if (users.get(i).getFavorites().get(j).getId() == idActivite)
+						userService.deleteFavoriteByUserId(activite,users.get(i).getId());
+				}
+			}
+		}
+		activityReportService.deleteReports(activite);
+		activityRegistrationService.deleteRegistrations(activite);
 		activiteRepository.delete(activite);
 	}
 

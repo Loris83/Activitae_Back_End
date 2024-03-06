@@ -99,7 +99,7 @@ public class GetActivityResponse {
 			setUser(new GetUserResponse(activite.getUser()));
 			setChat_id(activite.getChat().getId());
 			setImage_url(activite.getImage_url());
-			setMaxParticipants(maxParticipants);
+			setMaxParticipants(activite.getMaxParticipants());
 			setNbParticipants(nbParticipants);
 		}
 	}

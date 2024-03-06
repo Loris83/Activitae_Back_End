@@ -66,4 +66,18 @@ public class ActivityRegistrationService {
 				activiteRegistrationRepository.delete(activityRegistrations.get(i));
 		}
 	}
+	
+	public void unregister(Activite activity) {
+		List<ActivityRegistration> activityRegistrations = get(activity);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		CustomUserDetails userPrincipal = (CustomUserDetails) auth.getPrincipal();
+		
+		if(activityRegistrations != null) {
+			for(int i=0;i<activityRegistrations.size();i++) {
+				if(activityRegistrations.get(i).getUser().getId() == userPrincipal.getId())
+					activiteRegistrationRepository.delete(activityRegistrations.get(i));
+			}
+		}
+	}
 }

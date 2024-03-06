@@ -52,6 +52,12 @@ public class ActivityRegistrationController {
 	   return activityRegistrationService.registerActivity(activity);	
    }
    
+   @DeleteMapping("/unregister/{id}")
+   public void unregisterActivity(@PathVariable Long id) {
+	   Activite activity = activiteService.get(id);
+	   activityRegistrationService.unregister(activity);	
+   }
+   
    
 
 }

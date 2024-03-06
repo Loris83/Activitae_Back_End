@@ -16,5 +16,6 @@ import com.activitae.activitae.entities.User;
 public interface ActivityReportRepository extends JpaRepository<ActivityReport, Long>, JpaSpecificationExecutor<ActivityReport> {
 	List<ActivityReport> findByUser(User user);
 	List<ActivityReport> findAll();
+	List<ActivityReport> findByActivity(Activite activite);
 	Optional<ActivityReport> findById(Long id);
 }

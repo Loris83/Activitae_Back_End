@@ -1,5 +1,6 @@
 package com.activitae.activitae.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,6 @@ import com.activitae.activitae.entities.User;
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 	Optional<User> findByEmail(String email);
 	Optional<User> findById (Long id);
+	List<User> findAll();
 	Boolean existsByEmail(String email);
 }

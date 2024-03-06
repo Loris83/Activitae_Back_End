@@ -1,5 +1,8 @@
 package com.activitae.activitae.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,20 @@ public class ActivityReportService {
 		report.setActivity(activity);
 		report.setReport(true);
 		return activiteReportRepository.save(report);
+	}
+	
+	public List<ActivityReport> get(Activite activity) {
+		List<ActivityReport> activityReports = new ArrayList<ActivityReport>();
+		activityReports = activiteReportRepository.findByActivity(activity);
+		return activityReports;
+	}
+	
+	public void deleteReports(Activite activity) {//supprime toutes les inscriptions d'une activité
+		List<ActivityReport> activityReports = get(activity);
+		if(activityReports != null) {
+			for(int i=0;i<activityReports.size();i++)
+				activiteReportRepository.delete(activityReports.get(i));
+		}
 	}
 
 }

@@ -203,11 +203,11 @@ public class Activite {
 		this.entrantType = entrantType;
 	}
 	
-	public List<Thematique> getActivityThematics(){
+	public List<Thematique> getActivity_thematics(){
 		return activity_thematics;
 	}
 	
-	public void setActivityThematics(List<Thematique> activity_thematics){
+	public void setActivity_thematics(List<Thematique> activity_thematics){
 		this.activity_thematics = activity_thematics;
 	}
 

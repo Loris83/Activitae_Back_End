@@ -29,7 +29,7 @@ public class GetActivityRequest {
 	
 	private Date maxDate;
 	
-	private String thematic;
+	List<Thematique> activity_thematics;
 	
 	private String search;
 	
@@ -73,12 +73,12 @@ public class GetActivityRequest {
 		this.maxDate = maxDate;
 	}
 
-	public String getThematic() {
-		return thematic;
+	public List<Thematique> getActivity_thematics() {
+		return activity_thematics;
 	}
 
-	public void setThematic(String thematic) {
-		this.thematic = thematic;
+	public void setActivity_thematics(List<Thematique> activity_thematics) {
+		this.activity_thematics = activity_thematics;
 	}
 
 	public ActivityType getType() {

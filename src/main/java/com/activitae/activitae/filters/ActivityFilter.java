@@ -66,8 +66,8 @@ public class ActivityFilter {
 			if(getActivityRequest.getMaxDate() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.lessThan(activity.get("date"),getActivityRequest.getMaxDate()));
 			}
-			if(getActivityRequest.getThematic() != null) {
-				predicate = criteriaBuilder.and(predicate,criteriaBuilder.isMember(getActivityRequest.getThematic(), activity.get("activity_thematics").get("name")));
+			if(getActivityRequest.getActivity_thematics() != null) {
+				predicate = criteriaBuilder.and(predicate,criteriaBuilder.isMember(getActivityRequest.getActivity_thematics(), activity.get("activity_thematics").get("item")));
 			}
 			if(getActivityRequest.getMinPrice() != null) {
 				predicate = criteriaBuilder.and(predicate,criteriaBuilder.greaterThan(activity.get("price"),getActivityRequest.getMinPrice()));

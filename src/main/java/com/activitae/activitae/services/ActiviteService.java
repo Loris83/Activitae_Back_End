@@ -82,7 +82,7 @@ public class ActiviteService {
 		activite.setPlace_type(request.getPlace_type());
 		activite.setType(request.getType());
 		activite.setMaxParticipants(request.getMaxParticipants());
-		activite.setActivityThematics(request.getActivityThematics());
+		activite.setActivity_thematics(request.getActivity_thematics());
 		activite.setMaxAge(request.getMaxAge());
 		activite.setMinAge(request.getMinAge());
 		activite.setEntrantType(request.getEntrantType());

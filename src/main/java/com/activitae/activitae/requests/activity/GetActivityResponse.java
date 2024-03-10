@@ -8,6 +8,8 @@ import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
 import com.activitae.activitae.entities.Thematique;
+import com.activitae.activitae.entities.Message;
+import com.activitae.activitae.requests.chat.GetMessageResponse;
 import com.activitae.activitae.requests.user.get.GetUserResponse;
 
 
@@ -29,6 +31,8 @@ public class GetActivityResponse {
 	private GetUserResponse user;
 	private Integer maxParticipants;
 	private Integer nbParticipants;
+	
+	private GetMessageResponse lastMessage;
 	
 	public Long getId() {
 		return id;
@@ -113,6 +117,8 @@ public class GetActivityResponse {
 			setMaxParticipants(activite.getMaxParticipants());
 			setNbParticipants(nbParticipants);
 			setActivity_thematics(activite.getActivity_thematics());
+			activite.getChat().getMessages().stream().max((Message a, Message b) -> {return a.getDate().compareTo(b.getDate());}).ifPresentOrElse((Message message) -> {setLastMessage(new GetMessageResponse(message));}, ()->{setLastMessage(null);});
+			
 		}
 	}
 	public Long getChat_id() {
@@ -138,5 +144,11 @@ public class GetActivityResponse {
 	}
 	public void setNbParticipants(Integer nbParticipants) {
 		this.nbParticipants = nbParticipants;
+	}
+	public GetMessageResponse getLastMessage() {
+		return lastMessage;
+	}
+	public void setLastMessage(GetMessageResponse lastMessage) {
+		this.lastMessage = lastMessage;
 	}
 }

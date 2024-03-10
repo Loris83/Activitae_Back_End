@@ -17,6 +17,7 @@ import com.activitae.activitae.entities.User;
 import com.activitae.activitae.entities.Chat;
 import com.activitae.activitae.repositories.ChatRepository;
 import com.activitae.activitae.repositories.UserRepository;
+import com.activitae.activitae.requests.chat.GetChatResponse;
 import com.activitae.activitae.requests.chat.SendMessageRequest;
 
 @Service
@@ -43,8 +44,8 @@ public class ChatService {
 		return chatRepository.save(chat);
 	}
 	
-	public Chat getChat(Long chat_id) {
-		return chatRepository.findById(chat_id).get();
+	public GetChatResponse getChat(Long chat_id) {
+		return new GetChatResponse(chatRepository.findById(chat_id).get());
 	}
 	
 }

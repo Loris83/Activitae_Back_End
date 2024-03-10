@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.activitae.activitae.entities.Chat;
 import com.activitae.activitae.entities.Message;
+import com.activitae.activitae.requests.chat.GetChatResponse;
 import com.activitae.activitae.requests.chat.SendMessageRequest;
 import com.activitae.activitae.services.ChatService;
 
@@ -22,7 +23,7 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@GetMapping("/get/{id}")
-	Chat getChat(@PathVariable Long id) {
+	GetChatResponse getChat(@PathVariable Long id) {
 		return chatService.getChat(id);
 	}
 	

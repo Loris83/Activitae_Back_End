@@ -2,10 +2,12 @@ package com.activitae.activitae.requests.activity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.activitae.activitae.entities.Activite;
 import com.activitae.activitae.entities.ActivityPlaceType;
 import com.activitae.activitae.entities.ActivityType;
+import com.activitae.activitae.entities.Thematique;
 import com.activitae.activitae.requests.user.get.GetUserResponse;
 
 
@@ -23,6 +25,7 @@ public class GetActivityResponse {
     private String image_url;
     ActivityPlaceType place_type;
     ActivityType type;
+    List<Thematique> activity_thematics;
 	private GetUserResponse user;
 	private Integer maxParticipants;
 	private Integer nbParticipants;
@@ -82,6 +85,14 @@ public class GetActivityResponse {
 		this.user = user;
 	}
 	
+	public List<Thematique> getActivity_thematics() {
+		return activity_thematics;
+	}
+
+	public void setActivity_thematics(List<Thematique> activity_thematics) {
+		this.activity_thematics = activity_thematics;
+	}
+	
 	public GetActivityResponse() {
 		
 	}
@@ -101,6 +112,7 @@ public class GetActivityResponse {
 			setImage_url(activite.getImage_url());
 			setMaxParticipants(activite.getMaxParticipants());
 			setNbParticipants(nbParticipants);
+			setActivity_thematics(activite.getActivity_thematics());
 		}
 	}
 	public Long getChat_id() {

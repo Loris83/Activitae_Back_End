@@ -10,6 +10,7 @@ import com.activitae.activitae.entities.EntrantType;
 import com.activitae.activitae.entities.Thematique;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.criteria.Expression;
 
 public class GetActivityRequest {
 	
@@ -29,7 +30,7 @@ public class GetActivityRequest {
 	
 	private Date maxDate;
 	
-	List<Thematique> activity_thematics;
+	private String activity_thematics;
 	
 	private String search;
 	
@@ -73,11 +74,11 @@ public class GetActivityRequest {
 		this.maxDate = maxDate;
 	}
 
-	public List<Thematique> getActivity_thematics() {
+	public String getActivity_thematics() {
 		return activity_thematics;
 	}
 
-	public void setActivity_thematics(List<Thematique> activity_thematics) {
+	public void setActivity_thematics(String activity_thematics) {
 		this.activity_thematics = activity_thematics;
 	}
 
